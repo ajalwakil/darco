@@ -7,9 +7,12 @@
         <field name="inherit_id" ref="approvals.approval_request_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form/sheet/group/group[@name='request_details']" position="inside">
-                <field name="project_id"/>
-                <field name="transfer"/>
-                <field name="rfq"/>
+                <field name="project_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="operation_type_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="is_measurement" invisible="1"/>
+                <field name="transfer" invisible="1"/>
+                <field name="rfq" invisible="1"/>
+
             </xpath>
             <xpath expr="//button[@name='action_get_attachment_view']" position="after">
                 <button name="action_open_internal_transfer" type="object"
@@ -18,21 +21,21 @@
                     <field name="internal_transfer_count" string="Internal Transfer" widget="statinfo"/>
                 </button>
             </xpath>
-<!--            <xpath expr="//button[@name='action_create_purchase_orders']" position="attributes">-->
-<!--                  <attribute name="attrs">{'invisible': [-->
-<!--                        '|', '|', '|',-->
-<!--                            ('approval_type', '!=', 'purchase'),-->
-<!--                            ('request_status', '!=', 'approved'),-->
-<!--                            ('purchase_order_count', '&gt;', 0),-->
-<!--                            ('rfq', '=', False)-->
-<!--                    ]}</attribute>-->
-<!--            </xpath>-->
-<!--            <xpath expr="//button[@name='action_confirm']" position="after">-->
-<!--                <button name="create_transfer" type="object" groups="purchase.group_purchase_user"-->
-<!--                        string="Create Transfer" class="btn-primary" data-hotkey="g"-->
-<!--                        attrs="{'invisible': ['|', ('approval_type', '!=', 'purchase'),('request_status', '!=', 'approved')]}"-->
-<!--                />-->
-<!--            </xpath>-->
+            <!--            <xpath expr="//button[@name='action_create_purchase_orders']" position="attributes">-->
+            <!--                  <attribute name="attrs">{'invisible': [-->
+            <!--                        '|', '|', '|',-->
+            <!--                            ('approval_type', '!=', 'purchase'),-->
+            <!--                            ('request_status', '!=', 'approved'),-->
+            <!--                            ('purchase_order_count', '&gt;', 0),-->
+            <!--                            ('rfq', '=', False)-->
+            <!--                    ]}</attribute>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//button[@name='action_confirm']" position="after">-->
+            <!--                <button name="create_transfer" type="object" groups="purchase.group_purchase_user"-->
+            <!--                        string="Create Transfer" class="btn-primary" data-hotkey="g"-->
+            <!--                        attrs="{'invisible': ['|', ('approval_type', '!=', 'purchase'),('request_status', '!=', 'approved')]}"-->
+            <!--                />-->
+            <!--            </xpath>-->
             <!--             <xpath expr="//form/header" position="replace">-->
             <!--                <header>-->
             <!--                    <field name="user_status" invisible="1"-->
@@ -85,11 +88,21 @@
         <field name="inherit_id" ref="approvals_purchase.approval_purchase_request_view_form_inherit"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_create_purchase_orders']" position="replace">
+                <!--                <button name="action_create_purchase_orders" type="object"-->
+                <!--                    groups="purchase.group_purchase_user"-->
+                <!--                    string="Create RFQ's" class="btn-primary"-->
+                <!--                    attrs="{'invisible': [('is_measurement', '=', False)]}"-->
+                <!--                />-->
                 <button name="action_create_purchase_orders" type="object"
-                    groups="purchase.group_purchase_user"
-                    string="Create RFQ's" class="btn-primary"
-                    invisible="1"
-                />
+                        groups="purchase.group_purchase_user"
+                        string="Create RFQ's" class="btn-primary"
+                        data-hotkey="g" attrs="{'invisible': [
+                        '|', '|', '|',
+                            ('approval_type', '!=', 'purchase'),
+                            ('request_status', '!=', 'approved'),
+                            ('purchase_order_count', '&gt;', 0),
+                            ('is_measurement', '=', True)
+                    ]}"/>
             </xpath>
         </field>
     </record>
@@ -101,10 +114,15 @@
         <field name="inherit_id" ref="approvals.approval_product_line_view_tree"/>
         <field name="arch" type="xml">
             <field name="quantity" position="after">
-                <field name="short_excess" optional="show"/>
+
+                <field name="short_excess" optional="show"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
             </field>
             <field name="quantity" position="before">
-                <field name="on_hand_quantity" optional="show" readonly="1" force_save="1"/>
+                <field name="source_location_id" readonly="1" force_save="1"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
+                <field name="on_hand_quantity" optional="show" readonly="1" force_save="1"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
             </field>
         </field>
     </record>
@@ -142,6 +160,17 @@
                 <field name="project_id"/>
                 <field name="approval_id"/>
             </field>
+        </field>
+    </record>
+
+    <record id="approval_purchase_category_view_form_inherit_new" model="ir.ui.view">
+        <field name="name">approval.purchase.category.view.form.inherit.new</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_measurement"/>
+            </xpath>
         </field>
     </record>
 

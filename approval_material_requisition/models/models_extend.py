@@ -4,6 +4,21 @@ from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
 
+class ApprovalCategory(models.Model):
+    _inherit = 'approval.category'
+
+    is_measurement = fields.Boolean('Is Measurement')
+
+    @api.onchange('is_measurement')
+    def _onchange_approval(self):
+        if self.is_measurement:
+            self.approval_type = 'purchase'
+            self.update({'approval_type': 'purchase'})
+            self.write({'approval_type': 'purchase'})
+        else:
+            self.approval_type = False
+
+
 class ExtendApproval(models.Model):
     _inherit = "approval.request"
 
@@ -11,6 +26,27 @@ class ExtendApproval(models.Model):
     transfer = fields.Boolean('Is Transfer', compute='check_transfer')
     rfq = fields.Boolean('Is RFQ', compute='check_transfer')
     internal_transfer_count = fields.Integer(compute='_compute_internal_transfer_count')
+    is_measurement = fields.Boolean('Is Measurement')
+    operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
+
+    @api.onchange('project_id')
+    def onchange_project_id(self):
+        if self.project_id:
+            self.operation_type_id = self.project_id.operation_type_id.id
+
+    @api.onchange('category_id')
+    def _onchange_category(self):
+        if self.category_id.is_measurement:
+            self.is_measurement = True
+        else:
+            self.is_measurement = False
+
+    @api.onchange('is_measurement')
+    def _onchange_measurement(self):
+        if self.is_measurement:
+            self.is_measurement = True
+        else:
+            self.is_measurement = False
 
     def action_approve(self, approver=None):
         if not isinstance(approver, models.BaseModel):
@@ -18,10 +54,11 @@ class ExtendApproval(models.Model):
                 lambda approver: approver.user_id == self.env.user
             )
         approver.write({'status': 'approved'})
-        if self.transfer:
-            self.create_transfer()
-        if self.rfq:
-            self.action_create_purchase_orders()
+        if self.is_measurement:
+            if self.transfer:
+                self.create_transfer()
+            if self.rfq:
+                self.action_create_purchase_orders()
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
 
     def action_create_purchase_orders(self):
@@ -163,11 +200,19 @@ class ExtendApprovalProductLine(models.Model):
 
     on_hand_quantity = fields.Float('On Hand')
     short_excess = fields.Float('Short/Excess Qty', compute='compute_qty')
+    source_location_id = fields.Many2one('stock.location', 'Location')
 
-    @api.onchange('product_id')
+    @api.onchange('product_id', 'location_id')
     def onchange_product_id(self):
+        if self.approval_request_id.operation_type_id:
+            self.source_location_id = self.approval_request_id.operation_type_id.default_location_src_id.id
         if self.product_id:
-            self.on_hand_quantity = self.product_id.qty_available
+            quant = self.env['stock.quant'].search(
+                [('product_id', '=', self.product_id.id), ('location_id', '=', self.source_location_id.id)])
+            quantity = 0
+            for s in quant:
+                quantity += s.quantity
+            self.on_hand_quantity = quantity
             self.short_excess = self.on_hand_quantity - self.quantity
 
     @api.depends('quantity')
