@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 class ApprovalCategory(models.Model):
     _inherit = 'approval.category'
 
-    is_measurement = fields.Boolean('Is Measurement')
+    is_measurement = fields.Boolean('Is Requisition')
 
     @api.onchange('is_measurement')
     def _onchange_approval(self):

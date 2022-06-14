@@ -5,6 +5,13 @@
           <field name="model">project.project</field>
           <field name="inherit_id" ref="project.edit_project"/>
           <field name="arch" type="xml">
+              <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
+                <button name="action_open_approvals" type="object"
+                        class="oe_stat_button" icon="fa-credit-card"
+                        attrs="{'invisible': [('approval_count', '=', 0)]}">
+                    <field name="approval_count" string="Approval Requests" widget="statinfo"/>
+                </button>
+            </xpath>
               <xpath expr="//page[@name='settings']" position="after">
                   <page string="Material Plannings">
                       <field name="project_line_ids">
@@ -14,6 +21,7 @@
                               <field name="quantity"/>
                               <field name="uom_id"/>
                               <field name="consume_material"/>
+                              <field name="difference" optional="show"/>
                           </tree>
                       </field>
                   </page>
