@@ -16,7 +16,9 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/boq_rights.xml',
         'views/project_extend.xml',
+
     ],
 
 }

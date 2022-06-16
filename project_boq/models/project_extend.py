@@ -9,12 +9,26 @@ class project_boq(models.Model):
     project_line_ids = fields.One2many('project.project.line', 'boq_id', string="Material Planning Lines")
     stock_line_ids = fields.One2many('project.project.stock.line', 'move_id', string="Stock Move Lines")
     approval_count = fields.Integer(compute='_compute_approval_count')
+    po_count = fields.Integer(compute='_compute_approval_count')
+    state = fields.Selection(selection=[
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+        ('cancel', 'Cancelled'),
+    ], string='Stage', required=True, readonly=True, copy=False, tracking=True,
+        default='draft')
+
+    def action_confirm(self):
+        self.write({'state': 'done'})
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
 
     def _compute_approval_count(self):
         for project in self:
             approval = self.env['approval.request'].search([('project_id', '=', project.id)])
             project.approval_count = len(approval)
-
+            purchase_order = self.env['purchase.order'].search([('project_id', '=', project.id)])
+            project.po_count = len(purchase_order)
 
     def action_open_approvals(self):
         """ Return the list of approval request created or
@@ -33,22 +47,45 @@ class project_boq(models.Model):
         }
         return action
 
+    def action_open_purchase_order(self):
+        """ Return the list of Purchase Order created or
+        affected in quantity. """
+        self.ensure_one()
+        purchase_orders = self.env['purchase.order'].search([('project_id', '=', self.id)])
+        domain = [('id', 'in', purchase_orders.ids)]
+        action = {
+            'name': _('Purchase Order'),
+            'view_type': 'tree',
+            'view_mode': 'list,form',
+            'res_model': 'purchase.order',
+            'type': 'ir.actions.act_window',
+            'context': self.env.context,
+            'domain': domain,
+        }
+        return action
+
 
 class project_boq_line(models.Model):
     _name = 'project.project.line'
 
     product_id = fields.Many2one('product.product', string='Product Name', required=True)
     name = fields.Char(string='Description')
-    quantity = fields.Float(string='Quantity')
+    planned_quantity = fields.Float(string='Planned Qty')
+    estimated_cost = fields.Float(string='Estimated Cost')
+    estimated_amount = fields.Float(string='Estimated Amount')
     uom_id = fields.Many2one('uom.uom', string='UOM')
     boq_id = fields.Many2one('project.project', string='Material')
-    consume_material = fields.Float(string='Consumed Materials')
-    difference = fields.Float(string='Difference', compute='get_difference')
+    issues_qty = fields.Float(string='Issues Qty')
+    average_cost = fields.Float(string='Average Cost')
+    amount = fields.Float(string='Amount')
+    difference_qty = fields.Float(string='Diff. Qty', compute='get_difference')
+    difference_amount = fields.Float(string='Diff. Amount', compute='get_difference')
 
-    @api.depends('quantity', 'consume_material')
+    @api.depends('planned_quantity', 'issues_qty', 'estimated_amount', 'amount')
     def get_difference(self):
         for s in self:
-            s.difference = s.quantity - s.consume_material
+            s.difference_qty = s.planned_quantity - s.issues_qty
+            s.difference_amount = s.estimated_amount - s.amount
 
     @api.onchange('product_id')
     def _onchange_product_id(self):

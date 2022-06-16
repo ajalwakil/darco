@@ -1,43 +1,59 @@
 <odoo>
-  <data>
-      <record id="project_project_view_form_inherit" model="ir.ui.view">
-          <field name="name">project.project.form.in</field>
-          <field name="model">project.project</field>
-          <field name="inherit_id" ref="project.edit_project"/>
-          <field name="arch" type="xml">
-              <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
-                <button name="action_open_approvals" type="object"
-                        class="oe_stat_button" icon="fa-credit-card"
-                        attrs="{'invisible': [('approval_count', '=', 0)]}">
-                    <field name="approval_count" string="Approval Requests" widget="statinfo"/>
-                </button>
-            </xpath>
-              <xpath expr="//page[@name='settings']" position="after">
-                  <page string="Material Plannings">
-                      <field name="project_line_ids">
-                          <tree editable="bottom">
-                              <field name="product_id"/>
-                              <field name="name"/>
-                              <field name="quantity"/>
-                              <field name="uom_id"/>
-                              <field name="consume_material"/>
-                              <field name="difference" optional="show"/>
-                          </tree>
-                      </field>
-                  </page>
-<!--                  <page string="Stock Moves">-->
-<!--                      <field name="stock_line_ids">-->
-<!--                          <tree editable="bottom">-->
-<!--                              <field name="expected_date"/>-->
-<!--                              <field name="date"/>-->
-<!--                              <field name="product_id"/>-->
-<!--                              <field name="quantity"/>-->
-<!--                              <field name="product_uom_id"/>-->
-<!--                          </tree>-->
-<!--                      </field>-->
-<!--                  </page>-->
-              </xpath>
-          </field>
-      </record>
-  </data>
+    <data>
+        <record id="project_project_view_form_inherit" model="ir.ui.view">
+            <field name="name">project.project.form.in</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <button name="action_confirm" string="Approve" type="object" states="draft" class="oe_highlight" groups="project_boq.admin_access"/>
+                    <button name="action_draft" type="object" string="Reset to draft" states="done" class="oe_highlight" groups="project_boq.admin_access"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+
+                </xpath>
+                <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
+                    <button name="action_open_approvals" type="object"
+                            class="oe_stat_button" icon="fa-credit-card"
+                            attrs="{'invisible': [('approval_count', '=', 0)]}">
+                        <field name="approval_count" string="Approval Requests" widget="statinfo"/>
+                    </button>
+                    <button name="action_open_purchase_order" type="object"
+                            class="oe_stat_button" icon="fa-credit-card"
+                            attrs="{'invisible': [('po_count', '=', 0)]}">
+                        <field name="po_count" string="Purchase Order" widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//page[@name='settings']" position="after">
+                    <page string="Material Plannings">
+                        <field name="project_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="name" invisible="1"/>
+                                <field name="planned_quantity"/>
+                                <field name="uom_id"/>
+                                <field name="estimated_cost" optional="show"/>
+                                <field name="estimated_amount" optional="show"/>
+                                <field name="issues_qty" optional="show"/>
+                                <field name="average_cost" optional="show"/>
+                                <field name="amount" optional="show"/>
+                                <field name="difference_qty" optional="show"/>
+                                <field name="difference_amount" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <!--                  <page string="Stock Moves">-->
+                    <!--                      <field name="stock_line_ids">-->
+                    <!--                          <tree editable="bottom">-->
+                    <!--                              <field name="expected_date"/>-->
+                    <!--                              <field name="date"/>-->
+                    <!--                              <field name="product_id"/>-->
+                    <!--                              <field name="quantity"/>-->
+                    <!--                              <field name="product_uom_id"/>-->
+                    <!--                          </tree>-->
+                    <!--                      </field>-->
+                    <!--                  </page>-->
+                </xpath>
+            </field>
+        </record>
+    </data>
 </odoo>
