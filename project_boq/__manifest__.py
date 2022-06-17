@@ -18,6 +18,10 @@
         'security/ir.model.access.csv',
         'security/boq_rights.xml',
         'views/project_extend.xml',
+        'views/project_seq.xml',
+        'views/district.xml',
+        'views/city.xml',
+        'views/region.xml',
 
     ],
 

@@ -6,11 +6,21 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
                 <xpath expr="//form/header" position="inside">
-                    <button name="action_confirm" string="Approve" type="object" states="draft" class="oe_highlight" groups="project_boq.admin_access"/>
-                    <button name="action_draft" type="object" string="Reset to draft" states="done" class="oe_highlight" groups="project_boq.admin_access"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+                    <button name="action_confirm" string="Approve" type="object" states="draft" class="oe_highlight"
+                            groups="project_boq.admin_access"/>
+                    <button name="action_draft" type="object" string="Reset to draft" states="done" class="oe_highlight"
+                            groups="project_boq.admin_access"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
 
                 </xpath>
+                <field name="label_tasks" position="before">
+                    <field name="ref"/>
+                </field>
+                <field name="company_id" position="after">
+                    <field name="district_id"/>
+                    <field name="city_id"/>
+                    <field name="region_id"/>
+                </field>
                 <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
                     <button name="action_open_approvals" type="object"
                             class="oe_stat_button" icon="fa-credit-card"

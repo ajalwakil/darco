@@ -10,12 +10,22 @@ class project_boq(models.Model):
     stock_line_ids = fields.One2many('project.project.stock.line', 'move_id', string="Stock Move Lines")
     approval_count = fields.Integer(compute='_compute_approval_count')
     po_count = fields.Integer(compute='_compute_approval_count')
+    ref = fields.Char('Reference Number', readonly=True)
+    district_id = fields.Many2one('project.district', 'District')
+    city_id = fields.Many2one('project.city', 'City')
+    region_id = fields.Many2one('project.region', 'Region')
     state = fields.Selection(selection=[
         ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancelled'),
     ], string='Stage', required=True, readonly=True, copy=False, tracking=True,
         default='draft')
+
+    @api.model
+    def create(self, vals):
+        vals['ref'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
+        record = super(project_boq, self).create(vals)
+        return record
 
     def action_confirm(self):
         self.write({'state': 'done'})
