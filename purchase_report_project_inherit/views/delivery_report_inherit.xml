@@ -1,0 +1,10 @@
+<odoo>
+      <template id="report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
+          <xpath expr="//div[@class='row mt32 mb32']" position="inside">
+              <div t-if="o.project_id" class="col-auto" name="div_project_id">
+                  <strong>Project:</strong>
+                  <p t-field="o.project_id"/>
+              </div>
+          </xpath>
+      </template>
+</odoo>

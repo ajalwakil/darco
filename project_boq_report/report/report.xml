@@ -1,0 +1,31 @@
+<odoo>
+
+    <record id="paperformat_summary_boq" model="report.paperformat">
+        <field name="name">Boq Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">23</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="project_boq_report" model="ir.actions.report">
+        <field name="name">Material Planning Report</field>
+        <field name="model">project.project</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">project_boq_report.project_boq_report_id</field>
+        <field name="report_file">project_boq_report.project_boq_report_id</field>
+        <field name="binding_model_id" ref="model_project_project"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="project_boq_report.paperformat_summary_boq"/>
+    </record>
+
+</odoo>
