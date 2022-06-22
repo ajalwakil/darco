@@ -6,14 +6,21 @@ from odoo import models, fields, api, _
 class project_boq(models.Model):
     _inherit = 'project.project'
 
-    project_line_ids = fields.One2many('project.project.line', 'boq_id', string="Material Planning Lines")
+    name = fields.Char("Name", index=True, required=True, tracking=True, translate=True, default='New')
+    project_line_ids = fields.One2many('project.project.line', 'boq_id', string="Material Planning Lines",
+                                       track_visibility='onchange')
     stock_line_ids = fields.One2many('project.project.stock.line', 'move_id', string="Stock Move Lines")
     approval_count = fields.Integer(compute='_compute_approval_count')
     po_count = fields.Integer(compute='_compute_approval_count')
     ref = fields.Char('Reference Number', readonly=True)
     district_id = fields.Many2one('project.district', 'District')
+    region_manager = fields.Many2one('res.users', 'Region Manager')
     city_id = fields.Many2one('project.city', 'City')
     region_id = fields.Many2one('project.region', 'Region')
+    plot_number = fields.Char('Plot Number')
+    number_of_flat = fields.Char('Number of Flat')
+    number_of_roof = fields.Char('Number of Roof')
+    number_of_apartment = fields.Char('Number of Apartment in Each Floor')
     state = fields.Selection(selection=[
         ('draft', 'Draft'),
         ('done', 'Done'),
@@ -23,7 +30,7 @@ class project_boq(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['ref'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
+        vals['name'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
         record = super(project_boq, self).create(vals)
         return record
 
@@ -80,8 +87,8 @@ class project_boq_line(models.Model):
 
     product_id = fields.Many2one('product.product', string='Product Name', required=True)
     name = fields.Char(string='Description')
-    planned_quantity = fields.Float(string='Planned Qty')
-    estimated_cost = fields.Float(string='Estimated Cost')
+    planned_quantity = fields.Float(string='Planned Qty', track_visibility='onchange')
+    estimated_cost = fields.Float(string='Estimated Cost', track_visibility='onchange')
     estimated_amount = fields.Float(string='Estimated Amount')
     uom_id = fields.Many2one('uom.uom', string='UOM')
     boq_id = fields.Many2one('project.project', string='Material')

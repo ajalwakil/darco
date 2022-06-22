@@ -14,13 +14,26 @@
 
                 </xpath>
                 <field name="label_tasks" position="before">
-                    <field name="ref"/>
+                    <field name="ref" invisible="1"/>
                 </field>
-                <field name="company_id" position="after">
-                    <field name="district_id"/>
-                    <field name="city_id"/>
-                    <field name="region_id"/>
-                </field>
+                <xpath expr="//form/sheet/group" position="after">
+                <group name="custom_info">
+                    <group>
+                         <field name="district_id"/>
+                         <field name="region_id"/>
+                         <field name="plot_number"/>
+                         <field name="number_of_roof"/>
+                    </group>
+                    <group>
+                         <field name="city_id"/>
+                         <field name="region_manager"/>
+                         <field name="number_of_flat"/>
+                         <field name="number_of_apartment"/>
+                    </group>
+
+                </group>
+            </xpath>
+
                 <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
                     <button name="action_open_approvals" type="object"
                             class="oe_stat_button" icon="fa-credit-card"
