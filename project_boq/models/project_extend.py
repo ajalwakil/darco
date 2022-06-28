@@ -89,19 +89,21 @@ class project_boq_line(models.Model):
     name = fields.Char(string='Description')
     planned_quantity = fields.Float(string='Planned Qty', track_visibility='onchange')
     estimated_cost = fields.Float(string='Estimated Cost', track_visibility='onchange')
-    estimated_amount = fields.Float(string='Estimated Amount')
+    estimated_amount = fields.Float(string='Estimated Amount', compute='get_difference')
     uom_id = fields.Many2one('uom.uom', string='UOM')
     boq_id = fields.Many2one('project.project', string='Material')
-    issues_qty = fields.Float(string='Issues Qty')
-    average_cost = fields.Float(string='Average Cost')
-    amount = fields.Float(string='Amount')
+    issues_qty = fields.Float(string='Issues Qty', readonly=True)
+    average_cost = fields.Float(string='Average Cost', readonly=True)
+    amount = fields.Float(string='Amount', compute='get_difference')
     difference_qty = fields.Float(string='Diff. Qty', compute='get_difference')
     difference_amount = fields.Float(string='Diff. Amount', compute='get_difference')
 
-    @api.depends('planned_quantity', 'issues_qty', 'estimated_amount', 'amount')
+    @api.depends('planned_quantity', 'issues_qty', 'estimated_amount', 'estimated_cost', 'average_cost', 'amount')
     def get_difference(self):
         for s in self:
             s.difference_qty = s.planned_quantity - s.issues_qty
+            s.estimated_amount = s.planned_quantity * s.estimated_cost
+            s.amount = s.issues_qty * s.average_cost
             s.difference_amount = s.estimated_amount - s.amount
 
     @api.onchange('product_id')

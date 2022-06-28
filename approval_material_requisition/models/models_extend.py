@@ -158,10 +158,13 @@ class ExtendApproval(models.Model):
                                                                              ], limit=1)
                 if material_planning:
                     material_quantity = material_planning.issues_qty + line.quantity
+                    material_cost = material_planning.average_cost + line.product_id.standard_price
                     if material_quantity > material_planning.planned_quantity:
-                        raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(line.product_id.name)))
+                        raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
+                            line.product_id.name)))
                     else:
                         material_planning.issues_qty = material_quantity
+                        material_planning.average_cost = material_cost
                 else:
                     raise UserError(
                         _('The {0} not is in Material Planing.'.format(line.product_id.name)))
@@ -253,3 +256,48 @@ class ProjectExtend(models.Model):
     _inherit = 'project.project'
 
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
+
+
+class StockPickingTypeExtend(models.Model):
+    _inherit = 'stock.picking.type'
+
+    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+
+    @api.onchange('operation_type_id')
+    def onchange_operation_id(self):
+        for s in self:
+            project = self.env['project.project'].search([('operation_type_id', '=', s.id)], limit=1)
+            if project:
+                s.project_id = project.id
+            else:
+                s.project_id = False
+
+
+class StockPickingTypeExtend(models.Model):
+    _inherit = 'stock.picking.type'
+
+    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+
+    def onchange_operation_id(self):
+        for s in self:
+            project = self.env['project.project'].search([('operation_type_id', '=', s.id)], limit=1)
+            if project:
+                s.project_id = project.id
+            else:
+                s.project_id = False
+
+
+class StockLocationExtend(models.Model):
+    _inherit = 'stock.location'
+
+    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+
+    def onchange_operation_id(self):
+        for s in self:
+            s.project_id = False
+            project_src = self.env['project.project'].search([('operation_type_id.default_location_src_id', '=', s.id)], limit=1)
+            project_des = self.env['project.project'].search([('operation_type_id.default_location_dest_id', '=', s.id)], limit=1)
+            if project_src:
+                s.project_id = project_src.id
+            if project_des:
+                s.project_id = project_des.id

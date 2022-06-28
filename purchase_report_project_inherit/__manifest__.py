@@ -15,9 +15,10 @@
 
     # always loaded
     'data': [
-        'views/purchase_report_inherit.xml',
         'views/picking_report_inherit.xml',
         'views/delivery_report_inherit.xml',
+        'report/report.xml',
+        'report/purchase_report_extend.xml',
     ],
 
 }
