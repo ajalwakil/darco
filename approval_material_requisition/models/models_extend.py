@@ -49,16 +49,17 @@ class ExtendApproval(models.Model):
             self.is_measurement = False
 
     def action_approve(self, approver=None):
-        if not isinstance(approver, models.BaseModel):
-            approver = self.mapped('approver_ids').filtered(
-                lambda approver: approver.user_id == self.env.user
-            )
-        approver.write({'status': 'approved'})
         if self.is_measurement:
             if self.transfer:
                 self.create_transfer()
             if self.rfq:
                 self.action_create_purchase_orders()
+        if not isinstance(approver, models.BaseModel):
+            approver = self.mapped('approver_ids').filtered(
+                lambda approver: approver.user_id == self.env.user
+            )
+        approver.write({'status': 'approved'})
+
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
 
     def action_create_purchase_orders(self):
@@ -165,20 +166,20 @@ class ExtendApproval(models.Model):
                     else:
                         material_planning.issues_qty = material_quantity
                         material_planning.average_cost = material_cost
+                    val = {
+                        'product_id': line.product_id.id,
+                        'quantity_done': line.quantity,
+                        'name': '/',
+                        'product_uom': line.product_id.uom_id.id,
+                        'product_uom_qty': line.quantity,
+                        'procure_method': 'make_to_stock',
+                        'location_id': self.project_id.operation_type_id.default_location_src_id.id,
+                        'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
+                    }
+                    lines_list.append((0, 0, val))
                 else:
                     raise UserError(
                         _('The {0} not is in Material Planing.'.format(line.product_id.name)))
-                val = {
-                    'product_id': line.product_id.id,
-                    'quantity_done': line.quantity,
-                    'name': '/',
-                    'product_uom': line.product_id.uom_id.id,
-                    'product_uom_qty': line.quantity,
-                    'procure_method': 'make_to_stock',
-                    'location_id': self.project_id.operation_type_id.default_location_src_id.id,
-                    'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
-                }
-                lines_list.append((0, 0, val))
 
         picking_vals = {
             'project_id': self.project_id.id,
@@ -295,8 +296,10 @@ class StockLocationExtend(models.Model):
     def onchange_operation_id(self):
         for s in self:
             s.project_id = False
-            project_src = self.env['project.project'].search([('operation_type_id.default_location_src_id', '=', s.id)], limit=1)
-            project_des = self.env['project.project'].search([('operation_type_id.default_location_dest_id', '=', s.id)], limit=1)
+            project_src = self.env['project.project'].search([('operation_type_id.default_location_src_id', '=', s.id)],
+                                                             limit=1)
+            project_des = self.env['project.project'].search(
+                [('operation_type_id.default_location_dest_id', '=', s.id)], limit=1)
             if project_src:
                 s.project_id = project_src.id
             if project_des:
