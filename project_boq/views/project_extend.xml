@@ -14,7 +14,8 @@
 
                 </xpath>
                 <field name="label_tasks" position="before">
-                    <field name="ref" invisible="1"/>
+                    <field name="ref" attrs="{'readonly': [('ref_check', '!=', False)]}"/>
+                    <field name="ref_check" invisible="1"/>
                 </field>
                 <xpath expr="//form/sheet/group" position="after">
                 <group name="custom_info">
@@ -23,12 +24,14 @@
                          <field name="region_id"/>
                          <field name="plot_number"/>
                          <field name="number_of_roof"/>
+                        <field name="number_of_apartment"/>
                     </group>
                     <group>
                          <field name="city_id"/>
+                         <field name="area_id"/>
                          <field name="region_manager"/>
                          <field name="number_of_flat"/>
-                         <field name="number_of_apartment"/>
+
                     </group>
 
                 </group>

@@ -22,6 +22,8 @@
         'views/district.xml',
         'views/city.xml',
         'views/region.xml',
+        'views/area.xml',
+        'views/employee_extend.xml',
 
     ],
 

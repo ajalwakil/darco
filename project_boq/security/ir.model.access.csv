@@ -4,3 +4,4 @@ access_project_boq_project_boq_stock,project.project.stock.line,model_project_pr
 access_project_district,project.district,model_project_district,base.group_user,1,1,1,1
 access_project_city,project.city,model_project_city,base.group_user,1,1,1,1
 access_project_region,project.region,model_project_region,base.group_user,1,1,1,1
+access_project_area,project.area,model_project_area,base.group_user,1,1,1,1

@@ -6,16 +6,18 @@ from odoo import models, fields, api, _
 class project_boq(models.Model):
     _inherit = 'project.project'
 
-    name = fields.Char("Name", index=True, required=True, tracking=True, translate=True, default='New')
+    name = fields.Char("Name", index=True, required=True, tracking=True, translate=True)
     project_line_ids = fields.One2many('project.project.line', 'boq_id', string="Material Planning Lines",
                                        track_visibility='onchange')
     stock_line_ids = fields.One2many('project.project.stock.line', 'move_id', string="Stock Move Lines")
     approval_count = fields.Integer(compute='_compute_approval_count')
     po_count = fields.Integer(compute='_compute_approval_count')
-    ref = fields.Char('Reference Number', readonly=True)
+    ref = fields.Char('Reference Number')
+    ref_check = fields.Boolean('Reference Check')
     district_id = fields.Many2one('project.district', 'District')
     region_manager = fields.Many2one('res.users', 'Region Manager')
     city_id = fields.Many2one('project.city', 'City')
+    area_id = fields.Many2one('project.area', 'Area')
     region_id = fields.Many2one('project.region', 'Region')
     plot_number = fields.Char('Plot Number')
     number_of_flat = fields.Char('Number of Flat')
@@ -30,7 +32,8 @@ class project_boq(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
+        # vals['name'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
+        vals['ref_check'] = True
         record = super(project_boq, self).create(vals)
         return record
 
