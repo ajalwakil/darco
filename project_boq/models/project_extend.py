@@ -95,7 +95,7 @@ class project_boq_line(models.Model):
     estimated_amount = fields.Float(string='Estimated Amount', compute='get_difference')
     uom_id = fields.Many2one('uom.uom', string='UOM')
     boq_id = fields.Many2one('project.project', string='Material')
-    issues_qty = fields.Float(string='Issues Qty', readonly=True)
+    issues_qty = fields.Float(string='Issued Qty', readonly=True)
     average_cost = fields.Float(string='Average Cost', readonly=True)
     amount = fields.Float(string='Amount', compute='get_difference')
     difference_qty = fields.Float(string='Diff. Qty', compute='get_difference')

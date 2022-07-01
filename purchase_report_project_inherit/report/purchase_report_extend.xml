@@ -62,7 +62,7 @@
                                 <strong>Taxes</strong>
                             </th>
                             <th name="th_date_req" class="text-center">
-                                <strong>Date Req.</strong>
+                                <strong>Receipt Date</strong>
                             </th>
                             <th name="th_quantity" class="text-right">
                                 <strong>Qty</strong>
