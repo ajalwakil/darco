@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* approval_material_requisition
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-29 06:35+0000\n"
+"PO-Revision-Date: 2022-06-29 06:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_approval_category
+msgid "Approval Category"
+msgstr "الموافقة على الفئة"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_stock_picking__approval_id
+msgid "Approval ID"
+msgstr "الهويه المعتمدة"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_approval_request
+msgid "Approval Request"
+msgstr "طلب اعتماد"
+
+#. module: approval_material_requisition
+#: model_terms:ir.ui.view,arch_db:approval_material_requisition.approval_purchase_request_view_form_inherit
+msgid "Create RFQ's"
+msgstr "إنشاء طلب عرض سعر"
+
+#. module: approval_material_requisition
+#: model_terms:ir.ui.view,arch_db:approval_material_requisition.view_approval_extend_status_form
+msgid "Internal Transfer"
+msgstr "تحويل داخلي"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__internal_transfer_count
+msgid "Internal Transfer Count"
+msgstr "عدد التحويلات الداخليه"
+
+#. module: approval_material_requisition
+#: code:addons/approval_material_requisition/models/models_extend.py:0
+#, python-format
+msgid "Internal Transfer Orders"
+msgstr "طلب تحويل داخلي"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__is_measurement
+msgid "Is Measurement"
+msgstr "قياس"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__rfq
+msgid "Is RFQ"
+msgstr "طلب عرض سعر"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_category__is_measurement
+msgid "Is Requisition"
+msgstr "اعادة طلب"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__transfer
+msgid "Is Transfer"
+msgstr "اعادة تحويل"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_product_line__source_location_id
+msgid "Location"
+msgstr "الموقع"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_product_line__on_hand_quantity
+msgid "On Hand"
+msgstr "الكمية المتاح"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__operation_type_id
+#: model:ir.model.fields,field_description:approval_material_requisition.field_project_project__operation_type_id
+msgid "Operation Type"
+msgstr "نوع العملية"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_approval_product_line
+msgid "Product Line"
+msgstr "نوع المنتج"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_project_project
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__project_id
+#: model:ir.model.fields,field_description:approval_material_requisition.field_purchase_order__project_id
+#: model:ir.model.fields,field_description:approval_material_requisition.field_stock_picking__project_id
+msgid "Project"
+msgstr "المشروع"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_purchase_order
+msgid "Purchase Order"
+msgstr "طلب شراء"
+
+#. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_product_line__short_excess
+msgid "Short/Excess Qty"
+msgstr "فرق الكميات"
+
+#. module: approval_material_requisition
+#: code:addons/approval_material_requisition/models/models_extend.py:0
+#, python-format
+msgid "The Approval quantity of the {0} increased the plan quantity."
+msgstr "تمت اضافة كميات اكثر من الكميات المعتمة"
+
+#. module: approval_material_requisition
+#: code:addons/approval_material_requisition/models/models_extend.py:0
+#, python-format
+msgid "The {0} not is in Material Planing."
+msgstr "المواد المطلوبة ليست من ضمن المخطط"
+
+#. module: approval_material_requisition
+#: model:ir.model,name:approval_material_requisition.model_stock_picking
+msgid "Transfer"
+msgstr "تحويل"

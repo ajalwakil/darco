@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--                Approval Extend-->
+    <record id="view_approval_extend_status_form" model="ir.ui.view">
+        <field name="name">approval.request.extend</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group[@name='request_details']" position="inside">
+                <field name="project_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="operation_type_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="is_measurement" invisible="1"/>
+                <field name="transfer" invisible="1"/>
+                <field name="rfq" invisible="1"/>
+
+            </xpath>
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_internal_transfer" type="object"
+                        class="oe_stat_button" icon="fa-credit-card"
+                        attrs="{'invisible': [('internal_transfer_count', '=', 0)]}">
+                    <field name="internal_transfer_count" string="Internal Transfer" widget="statinfo"/>
+                </button>
+            </xpath>
+            <!--            <xpath expr="//button[@name='action_create_purchase_orders']" position="attributes">-->
+            <!--                  <attribute name="attrs">{'invisible': [-->
+            <!--                        '|', '|', '|',-->
+            <!--                            ('approval_type', '!=', 'purchase'),-->
+            <!--                            ('request_status', '!=', 'approved'),-->
+            <!--                            ('purchase_order_count', '&gt;', 0),-->
+            <!--                            ('rfq', '=', False)-->
+            <!--                    ]}</attribute>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//button[@name='action_confirm']" position="after">-->
+            <!--                <button name="create_transfer" type="object" groups="purchase.group_purchase_user"-->
+            <!--                        string="Create Transfer" class="btn-primary" data-hotkey="g"-->
+            <!--                        attrs="{'invisible': ['|', ('approval_type', '!=', 'purchase'),('request_status', '!=', 'approved')]}"-->
+            <!--                />-->
+            <!--            </xpath>-->
+            <!--             <xpath expr="//form/header" position="replace">-->
+            <!--                <header>-->
+            <!--                    <field name="user_status" invisible="1"-->
+            <!--                           modifiers="{&quot;invisible&quot;: true, &quot;readonly&quot;: true}"/>-->
+            <!--                    <field name="has_access_to_request" invisible="1"-->
+            <!--                           modifiers="{&quot;invisible&quot;: true, &quot;readonly&quot;: true}"/>-->
+            <!--                    <button name="action_confirm" string="Submit" type="object"-->
+            <!--                            attrs="{'invisible':[('request_status','!=','new')]}" class="btn-primary" data-hotkey="v"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [[&quot;request_status&quot;, &quot;!=&quot;, &quot;new&quot;]]}"/>-->
+            <!--&lt;!&ndash;                    <button name="action_create_purchase_orders" type="object" string="Create RFQ's" class="btn-primary"&ndash;&gt;-->
+            <!--&lt;!&ndash;                            data-hotkey="g"&ndash;&gt;-->
+            <!--&lt;!&ndash;                            attrs="{'invisible': [                         '|', '|',                             ('approval_type', '!=', 'purchase'),                             ('request_status', '!=', 'approved'),                             ('purchase_order_count', '&gt;', 0)                     ]}"&ndash;&gt;-->
+            <!--&lt;!&ndash;                            modifiers="{&quot;invisible&quot;: [&quot;|&quot;, &quot;|&quot;, [&quot;approval_type&quot;, &quot;!=&quot;, &quot;purchase&quot;], [&quot;request_status&quot;, &quot;!=&quot;, &quot;approved&quot;], [&quot;purchase_order_count&quot;, &quot;&gt;&quot;, 0]]}"/>&ndash;&gt;-->
+            <!--                    -->
+            <!--                    <button name="action_approve" string="Approve" type="object"-->
+            <!--                            attrs="{'invisible':[('user_status','!=','pending')]}" data-hotkey="q"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [[&quot;user_status&quot;, &quot;!=&quot;, &quot;pending&quot;]]}"/>-->
+            <!--                    <button name="action_refuse" string="Refuse" type="object"-->
+            <!--                            attrs="{'invisible':[('user_status','!=','pending')]}" data-hotkey="x"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [[&quot;user_status&quot;, &quot;!=&quot;, &quot;pending&quot;]]}"/>-->
+            <!--                    <button name="action_withdraw" string="Withdraw" type="object"-->
+            <!--                            attrs="{'invisible':['|','|',('request_status','==','new'),('user_status','in',['pending','cancel']),('user_status','=',False)]}"-->
+            <!--                            data-hotkey="y"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [&quot;|&quot;, &quot;|&quot;, [&quot;request_status&quot;, &quot;==&quot;, &quot;new&quot;], [&quot;user_status&quot;, &quot;in&quot;, [&quot;pending&quot;, &quot;cancel&quot;]], [&quot;user_status&quot;, &quot;=&quot;, false]]}"/>-->
+            <!--                    <button name="action_draft" string="Back To Draft" type="object"-->
+            <!--                            attrs="{'invisible':['|',('request_status','!=','cancel'),'&amp;',('user_status','==',False),('has_access_to_request','==',False)]}"-->
+            <!--                            data-hotkey="w"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [&quot;|&quot;, [&quot;request_status&quot;, &quot;!=&quot;, &quot;cancel&quot;], &quot;&amp;&quot;, [&quot;user_status&quot;, &quot;==&quot;, false], [&quot;has_access_to_request&quot;, &quot;==&quot;, false]]}"/>-->
+            <!--                    <button name="action_cancel" string="Cancel" type="object"-->
+            <!--                            attrs="{'invisible':['|',('request_status','in',['new','cancel']),'&amp;',('user_status','==',False),('has_access_to_request','==',False)]}"-->
+            <!--                            data-hotkey="z"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [&quot;|&quot;, [&quot;request_status&quot;, &quot;in&quot;, [&quot;new&quot;, &quot;cancel&quot;]], &quot;&amp;&quot;, [&quot;user_status&quot;, &quot;==&quot;, false], [&quot;has_access_to_request&quot;, &quot;==&quot;, false]]}"/>-->
+            <!--                    <widget name="attach_document" string="Attach Document" action="message_post"-->
+            <!--                            attrs="{'invisible': [('attachment_number', '&lt;', 1)]}"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [[&quot;attachment_number&quot;, &quot;&lt;&quot;, 1]]}"/>-->
+            <!--                    <widget name="attach_document" string="Attach Document" action="message_post" highlight="1"-->
+            <!--                            attrs="{'invisible': [('attachment_number', '&gt;=', 1)]}"-->
+            <!--                            modifiers="{&quot;invisible&quot;: [[&quot;attachment_number&quot;, &quot;&gt;=&quot;, 1]]}"/>-->
+            <!--                    <field name="request_status" widget="statusbar" modifiers="{&quot;readonly&quot;: true}"/>-->
+            <!--                </header>-->
+
+
+            <!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="approval_purchase_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.purchase.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals_purchase.approval_purchase_request_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_create_purchase_orders']" position="replace">
+                <!--                <button name="action_create_purchase_orders" type="object"-->
+                <!--                    groups="purchase.group_purchase_user"-->
+                <!--                    string="Create RFQ's" class="btn-primary"-->
+                <!--                    attrs="{'invisible': [('is_measurement', '=', False)]}"-->
+                <!--                />-->
+                <button name="action_create_purchase_orders" type="object"
+                        groups="purchase.group_purchase_user"
+                        string="Create RFQ's" class="btn-primary"
+                        data-hotkey="g" attrs="{'invisible': [
+                        '|', '|', '|',
+                            ('approval_type', '!=', 'purchase'),
+                            ('request_status', '!=', 'approved'),
+                            ('purchase_order_count', '&gt;', 0),
+                            ('is_measurement', '=', True)
+                    ]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_approval_line_extend_status_form" model="ir.ui.view">
+        <field name="name">approval.product.line.extend</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+
+                <field name="short_excess" optional="show"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
+            </field>
+            <field name="quantity" position="before">
+                <field name="source_location_id" readonly="1" force_save="1"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
+                <field name="on_hand_quantity" optional="show" readonly="1" force_save="1"
+                       attrs="{'column_invisible': [('parent.is_measurement', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+
+    <!--                    Project Extend-->
+    <record id="view_project_extend_status_form" model="ir.ui.view">
+        <field name="name">project.project.extend</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="operation_type_id"/>
+            </field>
+        </field>
+    </record>
+    <!--                    Purchase Order Extend-->
+    <record id="view_po_extend" model="ir.ui.view">
+        <field name="name">purchase.order.extend</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_id"/>
+            </field>
+        </field>
+    </record>
+    <!--                    Stock Picking Extend-->
+    <record id="view_stock_picking_extend" model="ir.ui.view">
+        <field name="name">stock.picking.extend</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="project_id"/>
+                <field name="approval_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <!--                    Stock Picking Type Extend-->
+    <record id="view_stock_picking_type_extend" model="ir.ui.view">
+        <field name="name">stock.picking.type.extend</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="project_id"/>
+            </field>
+        </field>
+    </record>
+
+    <!--                    Stock Location Extend-->
+    <record id="view_stock_location_type_extend" model="ir.ui.view">
+        <field name="name">stock.location.extend</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="usage" position="after">
+                <field name="project_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="approval_purchase_category_view_form_inherit_new" model="ir.ui.view">
+        <field name="name">approval.purchase.category.view.form.inherit.new</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_measurement"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

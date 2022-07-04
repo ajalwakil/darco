@@ -1,0 +1,182 @@
+<odoo>
+    <template id="project_boq_report_id">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="oe_structure"/>
+
+                        <h2>
+                            <center>
+                                <strong>Material Planning Report</strong>
+                            </center>
+                        </h2>
+                        <br/>
+                        <div style="float:left;margin-left:10px;font-size:18px;width:400px;margin-bottom:20px"><b>Project Name: </b><span style="margin-left:10px" t-field="o.name"></span></div>
+
+                        <table width="100%">
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Name of the tasks</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.label_tasks"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Project Manager</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.user_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Customer</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.partner_id.name"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Date Start</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.date_start"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Company</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.company_id.name"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Date End</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.date"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Operation Type</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.operation_type_id.name"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong></strong>
+                                </td>
+                                <td width="30%">
+                                    <span></span>
+                                </td>
+                            </tr>
+
+
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <table style="font-size:14px" class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+
+                                    <th name="th_product">
+                                        <strong>Product Name</strong>
+                                    </th>
+                                    <th name="th_description">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th name="th_quantity" >
+                                        <strong>Planned Quantity</strong>
+                                    </th>
+                                    <th name="th_uom">
+                                        <strong>Uom</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Estimated Cost</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Estimated Amount</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Issues Qty</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Average Cost</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Amount</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Difference Qty</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Difference Amount</strong>
+                                    </th>
+<!--                                    <th name="th_consume" >-->
+<!--                                        <strong>Consumed Material</strong>-->
+<!--                                    </th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.project_line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.planned_quantity"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.uom_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.estimated_cost"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.estimated_amount"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.issues_qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.average_cost"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.amount"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.difference_qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.difference_amount"/>
+                                        </td>
+<!--                                        <td>-->
+<!--                                            <span  t-field="line.consume_material"/>-->
+<!--                                        </td>-->
+
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="oe_structure"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

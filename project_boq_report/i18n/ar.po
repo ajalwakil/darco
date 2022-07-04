@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_boq_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-28 11:56+0000\n"
+"PO-Revision-Date: 2022-06-28 11:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<b>Project Name: </b>"
+msgstr "اسم المشروع"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid ""
+"<span style=\"padding-left:10px\">\n"
+"                                        <strong>Company</strong>\n"
+"                                    </span>"
+msgstr "الشركة"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid ""
+"<span style=\"padding-left:10px\">\n"
+"                                        <strong>Customer</strong>\n"
+"                                    </span>"
+msgstr "العملاء"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid ""
+"<span style=\"padding-left:10px\">\n"
+"                                        <strong>Name of the tasks</strong>\n"
+"                                    </span>"
+msgstr "اسم المهام"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid ""
+"<span style=\"padding-left:10px\">\n"
+"                                        <strong>Operation Type</strong>\n"
+"                                    </span>"
+msgstr "نوع العملية"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Amount</strong>"
+msgstr "المبلغ"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Average Cost</strong>"
+msgstr "متوسط التكلفة"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Date End</strong>"
+msgstr "تاريخ الانتهاء"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Date Start</strong>"
+msgstr "تاريخ البدء"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Description</strong>"
+msgstr "شرح"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Difference Amount</strong>"
+msgstr "اخلتلاف المبلغ"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Difference Qty</strong>"
+msgstr "اختلاف الكميات"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Estimated Amount</strong>"
+msgstr "المبلغ المتوقعة"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Estimated Cost</strong>"
+msgstr "التكلفة المبدأية"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Issues Qty</strong>"
+msgstr "الكمية الموردة"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Material Planning Report</strong>"
+msgstr "تقرير المواد الاولية"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Planned Quantity</strong>"
+msgstr "الكمية المطلوبة"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Product Name</strong>"
+msgstr "اسم الصنف"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Project Manager</strong>"
+msgstr "مدير المشروع"
+
+#. module: project_boq_report
+#: model_terms:ir.ui.view,arch_db:project_boq_report.project_boq_report_id
+msgid "<strong>Uom</strong>"
+msgstr "الوحدة"
+
+#. module: project_boq_report
+#: model:ir.actions.report,name:project_boq_report.project_boq_report
+msgid "Material Planning Report"
+msgstr "تقرير المواد الاولية"
+
+#. module: project_boq_report
+#: model:ir.model,name:project_boq_report.model_project_project
+msgid "Project"
+msgstr "المشروع"

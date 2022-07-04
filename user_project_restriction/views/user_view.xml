@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_allowed_projects_users_form" model="ir.ui.view">
+            <field name="name">user_projects_restriction.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Allowed Projects">
+
+                        <group>
+                            <field name="restrict"/>
+                            <field name="user_project_ids" String='Projects Restrict'/>
+                        </group>
+
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+<!--        <record id="account_journal_branch_rule" model="ir.rule">-->
+<!--            <field name="name">Account Journal Branch</field>-->
+<!--            <field name="model_id" ref="account.model_account_journal"/>-->
+<!--            <field name="global" eval="True"/>-->
+<!--            <field name="domain_force">['|',('outlet','=',False),('outlet','in',user.user_warehouse_ids.ids)]</field>-->
+<!--        </record>-->
+    </data>
+</odoo>
