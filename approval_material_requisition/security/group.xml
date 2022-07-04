@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <data noupdate="1">
+
+
+        <record model="ir.module.category" id="module_category_approval_extra">
+            <field name="name">Approval</field>
+            <field name="sequence">0</field>
+        </record>
+
+        <record id="extra_fields" model="res.groups">
+            <field name="name">admin</field>
+            <field name="category_id" ref="approval_material_recquisition.module_category_approval_extra"/>
+        </record>
+
+    </data>
+
+</odoo>

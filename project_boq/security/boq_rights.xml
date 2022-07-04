@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_project_group">
+            
+            <field name="name">Project BOQ</field>
+            <field name="description">Project BOQ Rights</field>
+            <field name="sequence">20</field>
+        </record>
+        
+        <record id="admin_access" model="res.groups">
+            <field name="name">admin</field>
+            <field name="category_id" ref="module_category_project_group"/>
+        </record>
+        
+
+    </data>
+    
+</odoo>

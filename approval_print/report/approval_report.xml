@@ -1,0 +1,127 @@
+<odoo>
+    <template id="approval_report_id">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="oe_structure"/>
+                        <h2>
+                            <center>
+                                <strong>Approval Request Report</strong>
+                            </center>
+                        </h2>
+                        <br/>
+                        <div style="float:left;margin-left:10px;font-size:18px;width:400px;margin-bottom:20px"><b>Approval Subject: </b><span style="margin-left:10px" t-field="o.name"></span></div>
+
+                        <table width="100%">
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Request Owner</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.request_owner_id"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Project Name</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.project_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Category Name</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.category_id.name"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Operation Type</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.operation_type_id"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" class="invoice">
+                                    <span style="padding-left:10px">
+                                        <strong>Date Confirmed</strong>
+                                    </span>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.date_confirmed"></span>
+                                </td>
+                                <td width="20%" class="invoice">
+                                    <strong>Contact</strong>
+                                </td>
+                                <td width="30%">
+                                    <span t-field="o.partner_id.name"></span>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <table style="font-size:14px" class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+
+                                    <th name="th_product">
+                                        <strong>Product Name</strong>
+                                    </th>
+                                    <th name="th_description">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <th name="th_location" >
+                                        <strong>Location</strong>
+                                    </th>
+                                    <th name="th_uom">
+                                        <strong>On Hand</strong>
+                                    </th>
+                                    <th name="th_quantity">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th name="th_short_quantity">
+                                        <strong>Short/Excess Qty</strong>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.product_line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.description"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.source_location_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.on_hand_quantity"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.quantity"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.short_excess"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="oe_structure"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

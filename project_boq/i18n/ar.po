@@ -1,0 +1,422 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_boq
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-29 06:35+0000\n"
+"PO-Revision-Date: 2022-06-29 06:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__approval_count
+msgid "Approval Count"
+msgstr "عدد الموافقات"
+
+#. module: project_boq
+#: code:addons/project_boq/models/project_extend.py:0
+#, python-format
+msgid "Approval Request"
+msgstr "عدد الطلبات"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
+msgid "Approval Requests"
+msgstr "عدد الطلبات"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: project_boq
+#: model:ir.actions.act_window,name:project_boq.action_open_area_form
+#: model:ir.model,name:project_boq.model_project_area
+#: model:ir.model.fields,field_description:project_boq.field_hr_employee__area_id
+#: model:ir.model.fields,field_description:project_boq.field_project_project__area_id
+#: model:ir.ui.menu,name:project_boq.area_menu
+msgid "Area"
+msgstr "المنطقة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.area_tree_view
+msgid "Area Details"
+msgstr "تفاصيل المنطقة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.area_form_view
+msgid "Area Form"
+msgstr "من المنطقة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__name
+msgid "Area Name"
+msgstr "اسم المنطقة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__average_cost
+msgid "Average Cost"
+msgstr "متوسط التكلفة"
+
+#. module: project_boq
+#: model:ir.model.fields.selection,name:project_boq.selection__project_project__state__cancel
+msgid "Cancelled"
+msgstr "الغاء"
+
+#. module: project_boq
+#: model:ir.actions.act_window,name:project_boq.action_open_city_form
+#: model:ir.model,name:project_boq.model_project_city
+#: model:ir.model.fields,field_description:project_boq.field_project_project__city_id
+#: model:ir.ui.menu,name:project_boq.city_menu
+msgid "City"
+msgstr "مدينة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.city_tree_view
+msgid "City Details"
+msgstr "تفاصيل المدينة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.city_form_view
+msgid "City Form"
+msgstr "نموذج المدينة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_city__name
+msgid "City Name"
+msgstr "اسم المدينة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__create_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_city__create_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_district__create_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__create_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__create_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_region__create_uid
+msgid "Created by"
+msgstr "انشأت بواسطة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__create_date
+#: model:ir.model.fields,field_description:project_boq.field_project_city__create_date
+#: model:ir.model.fields,field_description:project_boq.field_project_district__create_date
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__create_date
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__create_date
+#: model:ir.model.fields,field_description:project_boq.field_project_region__create_date
+msgid "Created on"
+msgstr "أنشأت في "
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__name
+msgid "Description"
+msgstr "الالوصف"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__difference_amount
+msgid "Diff. Amount"
+msgstr "فرق التكلفة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__difference_qty
+msgid "Diff. Qty"
+msgstr "فرق الكميات"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__display_name
+#: model:ir.model.fields,field_description:project_boq.field_project_city__display_name
+#: model:ir.model.fields,field_description:project_boq.field_project_district__display_name
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__display_name
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__display_name
+#: model:ir.model.fields,field_description:project_boq.field_project_region__display_name
+msgid "Display Name"
+msgstr "عرض الاسم"
+
+#. module: project_boq
+#: model:ir.actions.act_window,name:project_boq.action_open_district_form
+#: model:ir.model,name:project_boq.model_project_district
+#: model:ir.model.fields,field_description:project_boq.field_project_project__district_id
+#: model:ir.ui.menu,name:project_boq.district_menu
+msgid "District"
+msgstr "الحي"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.district_tree_view
+msgid "District Details"
+msgstr "تفاصيل الحي"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.district_form_view
+msgid "District Form"
+msgstr "نموذج الحي"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_district__name
+msgid "District Name"
+msgstr "اسم الحي"
+
+#. module: project_boq
+#: model:ir.model.fields.selection,name:project_boq.selection__project_project__state__done
+msgid "Done"
+msgstr "تم الانتهاء"
+
+#. module: project_boq
+#: model:ir.model.fields.selection,name:project_boq.selection__project_project__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: project_boq
+#: model:ir.model,name:project_boq.model_hr_employee
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__estimated_amount
+msgid "Estimated Amount"
+msgstr "القيمة المقدرة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__estimated_cost
+msgid "Estimated Cost"
+msgstr "التكلفة المقدرة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__expected_date
+msgid "Expected Date"
+msgstr "التاريخ المتوقع"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__id
+#: model:ir.model.fields,field_description:project_boq.field_project_city__id
+#: model:ir.model.fields,field_description:project_boq.field_project_district__id
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__id
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__id
+#: model:ir.model.fields,field_description:project_boq.field_project_region__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__issues_qty
+msgid "Issues Qty"
+msgstr "الكميات الموردة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area____last_update
+#: model:ir.model.fields,field_description:project_boq.field_project_city____last_update
+#: model:ir.model.fields,field_description:project_boq.field_project_district____last_update
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line____last_update
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line____last_update
+#: model:ir.model.fields,field_description:project_boq.field_project_region____last_update
+msgid "Last Modified on"
+msgstr "تاريخ اخر تحديث"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__write_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_city__write_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_district__write_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__write_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__write_uid
+#: model:ir.model.fields,field_description:project_boq.field_project_region__write_uid
+msgid "Last Updated by"
+msgstr "اخر تحديث تم بواسطة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_area__write_date
+#: model:ir.model.fields,field_description:project_boq.field_project_city__write_date
+#: model:ir.model.fields,field_description:project_boq.field_project_district__write_date
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__write_date
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__write_date
+#: model:ir.model.fields,field_description:project_boq.field_project_region__write_date
+msgid "Last Updated on"
+msgstr "اخر تحديث في"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__boq_id
+msgid "Material"
+msgstr "المواد"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__project_line_ids
+msgid "Material Planning Lines"
+msgstr "نوع المواد الاولية"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
+msgid "Material Plannings"
+msgstr "تخطيط المواد"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__number_of_apartment
+msgid "Number of Apartment in Each Floor"
+msgstr "عدد الشقق في كل طابق"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__number_of_flat
+msgid "Number of Flat"
+msgstr "عدد الشقق"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__number_of_roof
+msgid "Number of Roof"
+msgstr "عدد الروف"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__planned_quantity
+msgid "Planned Qty"
+msgstr "الكمية المخططة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__plot_number
+msgid "Plot Number"
+msgstr "عدد القطع"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__po_count
+msgid "Po Count"
+msgstr "حساب طلبات المشروع"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__product_id
+msgid "Product"
+msgstr "الصنف"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__product_id
+msgid "Product Name"
+msgstr "اسم الصنف"
+
+#. module: project_boq
+#: model:ir.model,name:project_boq.model_project_project
+msgid "Project"
+msgstr "المشروع"
+
+#. module: project_boq
+#: model:ir.module.category,name:project_boq.module_category_project_group
+msgid "Project BOQ"
+msgstr "جدول كميات المشروع"
+
+#. module: project_boq
+#: model:ir.module.category,description:project_boq.module_category_project_group
+msgid "Project BOQ Rights"
+msgstr "جدول كميات المشروع"
+
+#. module: project_boq
+#: model:ir.ui.menu,name:project_boq.project_location_details_menu
+msgid "Project Location"
+msgstr "مكان المشروع"
+
+#. module: project_boq
+#: code:addons/project_boq/models/project_extend.py:0
+#: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
+#, python-format
+msgid "Purchase Order"
+msgstr "طلب شراء"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__ref_check
+msgid "Reference Check"
+msgstr "التحقق المرجعي"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__ref
+msgid "Reference Number"
+msgstr "رقم المرجع"
+
+#. module: project_boq
+#: model:ir.actions.act_window,name:project_boq.action_open_region_form
+#: model:ir.model,name:project_boq.model_project_region
+#: model:ir.model.fields,field_description:project_boq.field_project_project__region_id
+#: model:ir.ui.menu,name:project_boq.region_menu
+msgid "Region"
+msgstr "المنطقة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.region_tree_view
+msgid "Region Details"
+msgstr "تفاصيل المنطقة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.region_form_view
+msgid "Region Form"
+msgstr "نموذج المنطقة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__region_manager
+msgid "Region Manager"
+msgstr "مدير المنطقة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_region__name
+msgid "Region Name"
+msgstr "اسم المنطقة"
+
+#. module: project_boq
+#: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
+msgid "Reset to draft"
+msgstr "اعادة تعين الى المستودع"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__state
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__move_id
+msgid "Stock Move"
+msgstr "تحركات المخزون"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project__stock_line_ids
+msgid "Stock Move Lines"
+msgstr "سير تحركات المخزون"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_line__uom_id
+msgid "UOM"
+msgstr "الوحدة"
+
+#. module: project_boq
+#: model:ir.model.fields,field_description:project_boq.field_project_project_stock_line__product_uom_id
+msgid "Unit of Measure"
+msgstr "الوحدة"
+
+#. module: project_boq
+#: model:res.groups,name:project_boq.admin_access
+msgid "admin"
+msgstr "المشرف"
+
+#. module: project_boq
+#: model:ir.model,name:project_boq.model_project_project_line
+msgid "project.project.line"
+msgstr ""
+
+#. module: project_boq
+#: model:ir.model,name:project_boq.model_project_project_stock_line
+msgid "project.project.stock.line"
+msgstr ""
