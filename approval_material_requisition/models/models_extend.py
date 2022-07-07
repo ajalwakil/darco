@@ -48,6 +48,25 @@ class ExtendApproval(models.Model):
         else:
             self.is_measurement = False
 
+    def action_confirm(self):
+        for request in self:
+            for line in request.product_line_ids:
+                if line.on_hand_quantity > 0:
+                    material_planning = self.env['project.project.line'].search(
+                        [('product_id', '=', line.product_id.id),
+                         ('boq_id', '=', request.project_id.id)
+                         ], limit=1)
+                    if material_planning:
+                        material_quantity = material_planning.issues_qty + line.quantity
+                        material_cost = material_planning.average_cost + line.product_id.standard_price
+                        if material_quantity > material_planning.planned_quantity:
+                            raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
+                                line.product_id.name)))
+                    else:
+                        raise UserError(
+                            _('The {0} not is in Material Planing.'.format(line.product_id.name)))
+        return super().action_confirm()
+
     def action_approve(self, approver=None):
         if self.is_measurement:
             if self.transfer:
