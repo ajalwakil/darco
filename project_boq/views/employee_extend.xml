@@ -1,13 +1,12 @@
 <odoo>
     <data>
-        <record id="hr_employee_view_form_inherit" model="ir.ui.view">
-            <field name="name">hr.employee.form.in</field>
-            <field name="model">hr.employee</field>
-            <field name="inherit_id" ref="hr.view_employee_form"/>
+        <record id="res_user_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.in</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-                <field name="country_id" position="after">
-                    <field name="city_id"/>
-                    <field name="area_id"/>
+                <field name="name" position="after">
+                    <field name="english_name"/>
                 </field>
             </field>
         </record>

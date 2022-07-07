@@ -24,6 +24,7 @@
         'views/region.xml',
         'views/area.xml',
         'views/employee_extend.xml',
+        'views/user_extend.xml',
 
     ],
 

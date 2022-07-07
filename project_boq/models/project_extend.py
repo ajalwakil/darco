@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 
 class project_boq(models.Model):
@@ -22,6 +23,8 @@ class project_boq(models.Model):
     plot_number = fields.Char('Plot Number')
     number_of_flat = fields.Char('Number of Flat')
     number_of_roof = fields.Char('Number of Roof')
+    english_name = fields.Char()
+
     number_of_apartment = fields.Char('Number of Apartment in Each Floor')
     state = fields.Selection(selection=[
         ('draft', 'Draft'),
@@ -30,11 +33,35 @@ class project_boq(models.Model):
     ], string='Stage', required=True, readonly=True, copy=False, tracking=True,
         default='draft')
 
+    _sql_constraints = [
+        ('ref_unique',
+         'unique (ref)',
+         'Choose another value - it has to be unique!')
+    ]
+
     @api.model
     def create(self, vals):
         # vals['name'] = self.env['ir.sequence'].next_by_code('project.project') or _('New')
         vals['ref_check'] = True
+        projects = self.env['project.project'].search([('ref', '=', vals['ref'])])
+        if projects:
+            raise UserError(_('Choose another value for Reference Number - it has to be unique.'))
         record = super(project_boq, self).create(vals)
+
+        if record.user_id:
+            if record.user_id.user_project_ids:
+                project_list = record.user_id.user_project_ids.ids
+                project_list.append(record.id)
+                record.user_id.user_project_ids = project_list
+            else:
+                record.user_id.user_project_ids = record.ids
+        if record.region_manager:
+            if record.region_manager.user_project_ids:
+                project_list = record.region_manager.user_project_ids.ids
+                project_list.append(record.id)
+                record.region_manager.user_project_ids = project_list
+            else:
+                record.region_manager.user_project_ids = record.ids
         return record
 
     def action_confirm(self):
@@ -114,6 +141,7 @@ class project_boq_line(models.Model):
         if self.product_id:
             self.name = self.product_id.name
             self.uom_id = self.product_id.uom_id.id
+            self.estimated_cost = self.product_id.standard_price
 
 
 class project_boq_stockline(models.Model):
