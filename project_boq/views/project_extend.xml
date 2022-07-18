@@ -1,5 +1,18 @@
 <odoo>
     <data>
+        <record id="project_project_view_form_simplified_inherit" model="ir.ui.view">
+            <field name="name">project.project.view.form.simplified.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='name']" position="after">
+                        <field name="ref" class="o_project_name oe_inline"></field>
+                        <field name="user_id" class="o_project_name oe_inline"></field>
+                        <field name="region_manager" class="o_project_name oe_inline"></field>
+                </xpath>
+            </field>
+        </record>
+
         <record id="project_project_view_form_inherit" model="ir.ui.view">
             <field name="name">project.project.form.in</field>
             <field name="model">project.project</field>

@@ -17,7 +17,7 @@
     'company': 'Itech Resources',
     'version': '0.1',
 
-    'depends': ['base', 'stock', 'purchase', 'project', 'approvals'],
+    'depends': ['base', 'stock', 'purchase', 'project', 'approvals', 'hr'],
 
     'data': [
         'views/user_view.xml',
