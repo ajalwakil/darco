@@ -5,7 +5,7 @@
             <field name="model">project.project</field>
             <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
             <field name="arch" type="xml">
-                <xpath expr="//group/field[@name='name']" position="after">
+                <xpath expr="//group/field[@name='user_id']" position="replace">
                         <field name="ref" class="o_project_name oe_inline"></field>
                         <field name="user_id" class="o_project_name oe_inline"></field>
                         <field name="region_manager" class="o_project_name oe_inline"></field>
