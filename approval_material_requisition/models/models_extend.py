@@ -81,6 +81,41 @@ class ExtendApproval(models.Model):
 
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
 
+    # def _get_purchase_order_values(self, vendor):
+    #     vals = super()._get_purchase_order_values(vendor)
+    #     # picking_type = self._get_picking_type()
+    #     if self.project_id.id:
+    #         vals['project_id'] = self.project_id.id
+    #     return vals
+
+    def action_cancel(self):
+        """ Override to notify Purchase Orders when the Approval Request is cancelled. """
+        res = super().action_cancel()
+        purchases = self.product_line_ids.purchase_order_line_id.order_id
+        for purchase in purchases:
+            product_lines = self.product_line_ids.filtered(
+                lambda line: line.purchase_order_line_id.order_id.id == purchase.id
+            )
+            purchase._activity_schedule_with_view(
+                'mail.mail_activity_data_warning',
+                views_or_xmlid='approvals_purchase.exception_approval_request_canceled',
+                user_id=self.env.user.id,
+                render_context={
+                    'approval_requests': self,
+                    'product_lines': product_lines,
+                }
+            )
+        for line in self.product_line_ids:
+            material_planning = self.env['project.project.line'].search([('product_id', '=', line.product_id.id),
+                                                                         ('boq_id', '=', self.project_id.id)
+                                                                         ], limit=1)
+            if material_planning:
+                material_quantity = material_planning.issues_qty - line.quantity
+                material_cost = material_planning.average_cost - line.product_id.standard_price
+                material_planning.issues_qty = material_quantity
+                material_planning.average_cost = material_cost
+        return res
+
     def action_create_purchase_orders(self):
         """ Create and/or modifier Purchase Orders. """
         self.ensure_one()
@@ -133,6 +168,8 @@ class ExtendApproval(models.Model):
                 else:
                     # No RFQ found: create a new one.
                     po_vals = line._get_purchase_order_values(vendor)
+                    if self.project_id:
+                        po_vals['project_id'] = self.project_id.id
                     new_purchase_order = self.env['purchase.order'].create(po_vals)
                     po_line_vals = self.env['purchase.order.line']._prepare_purchase_order_line(
                         line.product_id,
@@ -188,7 +225,7 @@ class ExtendApproval(models.Model):
                     val = {
                         'product_id': line.product_id.id,
                         'quantity_done': line.quantity,
-                        'name': '/',
+                        'name': line.product_id.name,
                         'product_uom': line.product_id.uom_id.id,
                         'product_uom_qty': line.quantity,
                         'procure_method': 'make_to_stock',
