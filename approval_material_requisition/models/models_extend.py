@@ -22,17 +22,19 @@ class ApprovalCategory(models.Model):
 class ExtendApproval(models.Model):
     _inherit = "approval.request"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
     transfer = fields.Boolean('Is Transfer', compute='check_transfer')
     rfq = fields.Boolean('Is RFQ', compute='check_transfer')
     internal_transfer_count = fields.Integer(compute='_compute_internal_transfer_count')
     is_measurement = fields.Boolean('Is Measurement')
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
+    region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
 
     @api.onchange('project_id')
     def onchange_project_id(self):
         if self.project_id:
             self.operation_type_id = self.project_id.operation_type_id.id
+            self.region_manager = self.project_id.region_manager.id
 
     @api.onchange('category_id')
     def _onchange_category(self):
@@ -299,13 +301,13 @@ class ExtendApprovalProductLine(models.Model):
 class ExtendPurchase(models.Model):
     _inherit = "purchase.order"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
 
 
 class ExtendPicking(models.Model):
     _inherit = "stock.picking"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
     approval_id = fields.Many2one('approval.request', 'Approval ID')
 
 
@@ -318,7 +320,7 @@ class ProjectExtend(models.Model):
 class StockPickingTypeExtend(models.Model):
     _inherit = 'stock.picking.type'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     @api.onchange('operation_type_id')
     def onchange_operation_id(self):
@@ -333,7 +335,7 @@ class StockPickingTypeExtend(models.Model):
 class StockPickingTypeExtend(models.Model):
     _inherit = 'stock.picking.type'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     def onchange_operation_id(self):
         for s in self:
@@ -347,7 +349,7 @@ class StockPickingTypeExtend(models.Model):
 class StockLocationExtend(models.Model):
     _inherit = 'stock.location'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     def onchange_operation_id(self):
         for s in self:

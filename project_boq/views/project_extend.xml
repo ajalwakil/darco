@@ -30,8 +30,11 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
                 <field name="label_tasks" position="before">
-                    <field name="ref" attrs="{'readonly': [('ref_check', '!=', False)]}"/>
+                    <field name="name" attrs="{'readonly': [('ref_check', '!=', False)]}"/>
                     <field name="ref_check" invisible="1"/>
+                </field>
+                <field name="name" position="replace">
+                    <field name="ref" />
                 </field>
                 <xpath expr="//form/sheet/group" position="after">
                     <group name="custom_info">

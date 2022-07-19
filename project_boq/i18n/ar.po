@@ -354,27 +354,27 @@ msgstr "رقم المرجع"
 #: model:ir.model.fields,field_description:project_boq.field_project_project__region_id
 #: model:ir.ui.menu,name:project_boq.region_menu
 msgid "Region"
-msgstr "المنطقة"
+msgstr "القطاع"
 
 #. module: project_boq
 #: model_terms:ir.ui.view,arch_db:project_boq.region_tree_view
 msgid "Region Details"
-msgstr "تفاصيل المنطقة"
+msgstr "تفاصيل القطاع"
 
 #. module: project_boq
 #: model_terms:ir.ui.view,arch_db:project_boq.region_form_view
 msgid "Region Form"
-msgstr "نموذج المنطقة"
+msgstr "نموذج القطاع"
 
 #. module: project_boq
 #: model:ir.model.fields,field_description:project_boq.field_project_project__region_manager
 msgid "Region Manager"
-msgstr "مدير المنطقة"
+msgstr "مدير القطاع"
 
 #. module: project_boq
 #: model:ir.model.fields,field_description:project_boq.field_project_region__name
 msgid "Region Name"
-msgstr "اسم المنطقة"
+msgstr "اسم القطاع"
 
 #. module: project_boq
 #: model_terms:ir.ui.view,arch_db:project_boq.project_project_view_form_inherit
