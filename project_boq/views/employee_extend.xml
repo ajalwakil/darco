@@ -9,6 +9,9 @@
                     <field name="city_id"/>
                     <field name="area_id"/>
                 </field>
+                <field name="name" position="after">
+                    <field name="english_name"/>
+                </field>
             </field>
         </record>
     </data>

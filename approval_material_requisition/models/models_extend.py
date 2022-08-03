@@ -22,17 +22,19 @@ class ApprovalCategory(models.Model):
 class ExtendApproval(models.Model):
     _inherit = "approval.request"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
     transfer = fields.Boolean('Is Transfer', compute='check_transfer')
     rfq = fields.Boolean('Is RFQ', compute='check_transfer')
     internal_transfer_count = fields.Integer(compute='_compute_internal_transfer_count')
     is_measurement = fields.Boolean('Is Measurement')
-    operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
+    operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type', related='project_id.operation_type_id')
+    region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
 
     @api.onchange('project_id')
     def onchange_project_id(self):
         if self.project_id:
             self.operation_type_id = self.project_id.operation_type_id.id
+            self.region_manager = self.project_id.region_manager.id
 
     @api.onchange('category_id')
     def _onchange_category(self):
@@ -48,6 +50,25 @@ class ExtendApproval(models.Model):
         else:
             self.is_measurement = False
 
+    def action_confirm(self):
+        for request in self:
+            for line in request.product_line_ids:
+                if line.on_hand_quantity > 0:
+                    material_planning = self.env['project.project.line'].search(
+                        [('product_id', '=', line.product_id.id),
+                         ('boq_id', '=', request.project_id.id)
+                         ], limit=1)
+                    if material_planning:
+                        material_quantity = material_planning.issues_qty + line.quantity
+                        material_cost = material_planning.average_cost + line.product_id.standard_price
+                        if material_quantity > material_planning.planned_quantity:
+                            raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
+                                line.product_id.name)))
+                    else:
+                        raise UserError(
+                            _('The {0} not is in Material Planing.'.format(line.product_id.name)))
+        return super().action_confirm()
+
     def action_approve(self, approver=None):
         if self.is_measurement:
             if self.transfer:
@@ -61,6 +82,41 @@ class ExtendApproval(models.Model):
         approver.write({'status': 'approved'})
 
         self.sudo()._get_user_approval_activities(user=self.env.user).action_feedback()
+
+    # def _get_purchase_order_values(self, vendor):
+    #     vals = super()._get_purchase_order_values(vendor)
+    #     # picking_type = self._get_picking_type()
+    #     if self.project_id.id:
+    #         vals['project_id'] = self.project_id.id
+    #     return vals
+
+    def action_cancel(self):
+        """ Override to notify Purchase Orders when the Approval Request is cancelled. """
+        res = super().action_cancel()
+        purchases = self.product_line_ids.purchase_order_line_id.order_id
+        for purchase in purchases:
+            product_lines = self.product_line_ids.filtered(
+                lambda line: line.purchase_order_line_id.order_id.id == purchase.id
+            )
+            purchase._activity_schedule_with_view(
+                'mail.mail_activity_data_warning',
+                views_or_xmlid='approvals_purchase.exception_approval_request_canceled',
+                user_id=self.env.user.id,
+                render_context={
+                    'approval_requests': self,
+                    'product_lines': product_lines,
+                }
+            )
+        for line in self.product_line_ids:
+            material_planning = self.env['project.project.line'].search([('product_id', '=', line.product_id.id),
+                                                                         ('boq_id', '=', self.project_id.id)
+                                                                         ], limit=1)
+            if material_planning:
+                material_quantity = material_planning.issues_qty - line.quantity
+                material_cost = material_planning.average_cost - line.product_id.standard_price
+                material_planning.issues_qty = material_quantity
+                material_planning.average_cost = material_cost
+        return res
 
     def action_create_purchase_orders(self):
         """ Create and/or modifier Purchase Orders. """
@@ -114,6 +170,8 @@ class ExtendApproval(models.Model):
                 else:
                     # No RFQ found: create a new one.
                     po_vals = line._get_purchase_order_values(vendor)
+                    if self.project_id:
+                        po_vals['project_id'] = self.project_id.id
                     new_purchase_order = self.env['purchase.order'].create(po_vals)
                     po_line_vals = self.env['purchase.order.line']._prepare_purchase_order_line(
                         line.product_id,
@@ -169,7 +227,7 @@ class ExtendApproval(models.Model):
                     val = {
                         'product_id': line.product_id.id,
                         'quantity_done': line.quantity,
-                        'name': '/',
+                        'name': line.product_id.name,
                         'product_uom': line.product_id.uom_id.id,
                         'product_uom_qty': line.quantity,
                         'procure_method': 'make_to_stock',
@@ -243,13 +301,13 @@ class ExtendApprovalProductLine(models.Model):
 class ExtendPurchase(models.Model):
     _inherit = "purchase.order"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
 
 
 class ExtendPicking(models.Model):
     _inherit = "stock.picking"
 
-    project_id = fields.Many2one('project.project', 'Project')
+    project_id = fields.Many2one('project.project', 'Project Number')
     approval_id = fields.Many2one('approval.request', 'Approval ID')
 
 
@@ -262,7 +320,7 @@ class ProjectExtend(models.Model):
 class StockPickingTypeExtend(models.Model):
     _inherit = 'stock.picking.type'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     @api.onchange('operation_type_id')
     def onchange_operation_id(self):
@@ -277,7 +335,7 @@ class StockPickingTypeExtend(models.Model):
 class StockPickingTypeExtend(models.Model):
     _inherit = 'stock.picking.type'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     def onchange_operation_id(self):
         for s in self:
@@ -291,7 +349,7 @@ class StockPickingTypeExtend(models.Model):
 class StockLocationExtend(models.Model):
     _inherit = 'stock.location'
 
-    project_id = fields.Many2one('project.project', string='Project', compute='onchange_operation_id')
+    project_id = fields.Many2one('project.project', string='Project Number', compute='onchange_operation_id')
 
     def onchange_operation_id(self):
         for s in self:

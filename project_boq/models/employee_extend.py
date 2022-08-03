@@ -8,3 +8,4 @@ class Employee_Extend(models.Model):
 
     city_id = fields.Many2one('project.city', 'City')
     area_id = fields.Many2one('project.area', 'Area')
+    english_name = fields.Char('English Name')

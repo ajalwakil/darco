@@ -1,5 +1,18 @@
 <odoo>
     <data>
+        <record id="project_project_view_form_simplified_inherit" model="ir.ui.view">
+            <field name="name">project.project.view.form.simplified.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='user_id']" position="replace">
+                        <field name="ref" class="o_project_name oe_inline"></field>
+                        <field name="user_id" class="o_project_name oe_inline"></field>
+                        <field name="region_manager" class="o_project_name oe_inline"></field>
+                </xpath>
+            </field>
+        </record>
+
         <record id="project_project_view_form_inherit" model="ir.ui.view">
             <field name="name">project.project.form.in</field>
             <field name="model">project.project</field>
@@ -13,29 +26,36 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
 
                 </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <field name="label_tasks" position="before">
-                    <field name="ref" attrs="{'readonly': [('ref_check', '!=', False)]}"/>
+                    <field name="name" attrs="{'readonly': [('ref_check', '!=', False)]}"/>
                     <field name="ref_check" invisible="1"/>
                 </field>
+                <field name="name" position="replace">
+                    <field name="ref" />
+                </field>
                 <xpath expr="//form/sheet/group" position="after">
-                <group name="custom_info">
-                    <group>
-                         <field name="district_id"/>
-                         <field name="region_id"/>
-                         <field name="plot_number"/>
-                         <field name="number_of_roof"/>
-                        <field name="number_of_apartment"/>
-                    </group>
-                    <group>
-                         <field name="city_id"/>
-                         <field name="area_id"/>
-                         <field name="region_manager"/>
-                         <field name="number_of_flat"/>
+                    <group name="custom_info">
+                        <group>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="plot_number"/>
+                            <field name="number_of_roof"/>
+                            <field name="number_of_apartment"/>
+                        </group>
+                        <group>
+                            <field name="city_id"/>
+                            <field name="area_id"/>
+                            <field name="region_manager"/>
+                            <field name="english_name"/>
+                            <field name="number_of_flat"/>
+
+                        </group>
 
                     </group>
-
-                </group>
-            </xpath>
+                </xpath>
 
                 <xpath expr="//button[@name='action_view_analytic_account_entries']" position="after">
                     <button name="action_open_approvals" type="object"
@@ -78,6 +98,16 @@
                     <!--                          </tree>-->
                     <!--                      </field>-->
                     <!--                  </page>-->
+                </xpath>
+            </field>
+        </record>
+        <record id="project_project_view_tree_inherit" model="ir.ui.view">
+            <field name="name">project.project.tree.in</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>
