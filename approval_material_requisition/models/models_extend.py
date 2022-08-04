@@ -35,6 +35,14 @@ class ExtendApproval(models.Model):
         if self.project_id:
             self.operation_type_id = self.project_id.operation_type_id.id
             self.region_manager = self.project_id.region_manager.id
+            if self.region_manager:
+                self.approver_ids = False
+                approver = self.env['approval.approver'].create({
+                    'user_id': self.region_manager.id,
+                    'request_id': self.id,
+                    'status': 'new'
+                })
+                print(approver)
 
     @api.onchange('category_id')
     def _onchange_category(self):
