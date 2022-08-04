@@ -31,6 +31,11 @@ msgid "Approval Request"
 msgstr "طلب اعتماد"
 
 #. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_approval_request__region_manager
+msgid "Region Manager"
+msgstr "القطاع"
+
+#. module: approval_material_requisition
 #: model_terms:ir.ui.view,arch_db:approval_material_requisition.approval_purchase_request_view_form_inherit
 msgid "Create RFQ's"
 msgstr "إنشاء طلب عرض سعر"
