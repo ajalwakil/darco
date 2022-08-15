@@ -93,6 +93,11 @@ msgid "Operation Type"
 msgstr "نوع العملية"
 
 #. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_project_project__operation_po_type_id
+msgid "Operation Type Po"
+msgstr "مستودع المشروع"
+
+#. module: approval_material_requisition
 #: model:ir.model,name:approval_material_requisition.model_approval_product_line
 msgid "Product Line"
 msgstr "نوع المنتج"
