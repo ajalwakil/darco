@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="approvals.approval_request_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form/sheet/group/group[@name='request_details']" position="inside">
-                <field name="project_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="project_id"/>
                 <field name="operation_type_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
                 <field name="region_manager" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
                 <field name="is_measurement" invisible="1"/>
