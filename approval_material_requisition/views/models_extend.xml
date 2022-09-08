@@ -9,11 +9,17 @@
             <xpath expr="//form/sheet/group/group[@name='request_details']" position="inside">
                 <field name="project_id" />
                 <field name="operation_type_id" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
-                <field name="region_manager" attrs="{'invisible':[('is_measurement', '=', False)]}"/>
+                <field name="region_manager"/>
                 <field name="is_measurement" invisible="1"/>
                 <field name="transfer" invisible="1"/>
                 <field name="rfq" invisible="1"/>
 
+            </xpath>
+            <xpath expr="//field[@name='quantity']" position="replace">
+                <field name="quantity" invisible="1"></field>
+            </xpath>
+            <xpath expr="//field[@name='amount']" position="replace">
+                <field name="amount" invisible="1"></field>
             </xpath>
             <xpath expr="//button[@name='action_get_attachment_view']" position="after">
                 <button name="action_open_internal_transfer" type="object"
