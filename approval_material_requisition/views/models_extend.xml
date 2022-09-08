@@ -88,7 +88,16 @@
             <!--            </xpath>-->
         </field>
     </record>
-
+    <record id="approval_request_view_tree_inherit" model="ir.ui.view">
+        <field name="name">approval.request.view.tree.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='request_owner_id']" position="after">
+                <field name="date"/>
+            </xpath>
+        </field>
+    </record>
     <record id="approval_purchase_request_view_form_inherit" model="ir.ui.view">
         <field name="name">approval.purchase.request.view.form.inherit</field>
         <field name="model">approval.request</field>
