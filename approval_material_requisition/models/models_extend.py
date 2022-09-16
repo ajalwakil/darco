@@ -40,6 +40,7 @@ class ExtendApproval(models.Model):
                 approver = self.env['approval.approver'].create({
                     'user_id': self.region_manager.id,
                     'request_id': self.id,
+                    'required': True,
                     'status': 'new'
                 })
                 print(approver)
