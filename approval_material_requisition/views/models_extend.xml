@@ -13,6 +13,7 @@
                 <field name="is_measurement" invisible="1"/>
                 <field name="transfer" invisible="1"/>
                 <field name="rfq" invisible="1"/>
+                <field name="approver_rights" invisible="1"/>
 
             </xpath>
             <xpath expr="//field[@name='quantity']" position="replace">
@@ -27,6 +28,9 @@
                         attrs="{'invisible': [('internal_transfer_count', '=', 0)]}">
                     <field name="internal_transfer_count" string="Internal Transfer" widget="statinfo"/>
                 </button>
+            </xpath>
+            <xpath expr="//field[@name='approver_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('approver_rights', '=', False)]}</attribute>
             </xpath>
             <!--            <xpath expr="//button[@name='action_create_purchase_orders']" position="attributes">-->
             <!--                  <attribute name="attrs">{'invisible': [-->

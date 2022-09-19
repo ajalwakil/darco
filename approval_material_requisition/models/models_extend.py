@@ -29,6 +29,14 @@ class ExtendApproval(models.Model):
     is_measurement = fields.Boolean('Is Measurement')
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type', related='project_id.operation_type_id')
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
+    approver_rights = fields.Boolean(string='Approver rights')
+
+    @api.onchange('project_id')
+    def get_values_def(self):
+        for s in self:
+            s.approver_rights = False
+            if s.env.user.has_group('approval_material_requisition.group_approvers'):
+                s.approver_rights = True
 
     @api.onchange('project_id')
     def onchange_project_id(self):
@@ -47,9 +55,10 @@ class ExtendApproval(models.Model):
                     approver = self.env['approval.approver'].create({
                         'user_id': app.user_id.id,
                         'request_id': self.id,
+                        'required': True,
                         'status': 'new'
                     })
-                    
+
     @api.onchange('category_id')
     def _onchange_category(self):
         if self.category_id.is_measurement:

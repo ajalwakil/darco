@@ -1,3 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_res_agent.group_res_agent_user,res.agent Agent User,hotel_booking_extend.model_res_agent,hotel_booking.group_hotel_booking_user,1,0,0,0
-access_res_agent.group_res_agent_admin,res.agent Agent Administrator,hotel_booking_extend.model_res_agent,hotel_booking.group_hotel_booking_admin,1,1,1,1
+approvals.access_approval_approver,approvals.access_approval_approver,approvals.model_approval_approver,group_approvers,1,1,0,1
