@@ -8,9 +8,10 @@
     'depends': ['base', 'approvals', 'purchase', 'project', 'stock', 'approvals_purchase'
                 ],
     'data': [
-        'views/models_extend.xml',
-        # 'security/group.xml',
+        'security/group.xml',
         # 'security/ir.model.access.csv',
+        'views/models_extend.xml',
+  
     ],
     'installable': True,
 

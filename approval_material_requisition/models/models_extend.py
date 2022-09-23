@@ -29,8 +29,16 @@ class ExtendApproval(models.Model):
     is_measurement = fields.Boolean('Is Measurement')
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type', related='project_id.operation_type_id')
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
+    approver_rights = fields.Boolean(string='Approver rights')
     date = fields.Datetime(string="Date", default=fields.Datetime.now)
     
+    @api.onchange('project_id')
+    def get_values_def(self):
+        for s in self:
+            s.approver_rights = False
+            if s.env.user.has_group('approval_material_requisition.group_approvers'):
+                s.approver_rights = True
+
     @api.onchange('project_id')
     def onchange_project_id(self):
         if self.project_id:
@@ -44,7 +52,13 @@ class ExtendApproval(models.Model):
                     'required': True,
                     'status': 'new'
                 })
-                print(approver)
+                for app in self.category_id.approver_ids:
+                    approver = self.env['approval.approver'].create({
+                        'user_id': app.user_id.id,
+                        'request_id': self.id,
+                        'required': True,
+                        'status': 'new'
+                    })
 
     @api.onchange('category_id')
     def _onchange_category(self):
@@ -182,6 +196,7 @@ class ExtendApproval(models.Model):
                     po_vals = line._get_purchase_order_values(vendor)
                     if self.project_id:
                         po_vals['project_id'] = self.project_id.id
+                        po_vals['picking_type_id'] = self.project_id.operation_po_type_id.id
                     new_purchase_order = self.env['purchase.order'].create(po_vals)
                     po_line_vals = self.env['purchase.order.line']._prepare_purchase_order_line(
                         line.product_id,
@@ -313,6 +328,13 @@ class ExtendPurchase(models.Model):
 
     project_id = fields.Many2one('project.project', 'Project Number')
 
+    @api.onchange('project_id')
+    def onchange_project_id(self):
+        if self.project_id:
+            self.picking_type_id = self.project_id.operation_po_type_id.id
+        else:
+            self.picking_type_id = False
+
 
 class ExtendPicking(models.Model):
     _inherit = "stock.picking"
@@ -325,6 +347,7 @@ class ProjectExtend(models.Model):
     _inherit = 'project.project'
 
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
+    operation_po_type_id = fields.Many2one('stock.picking.type', 'Operation Type Po')
 
 
 class StockPickingTypeExtend(models.Model):
