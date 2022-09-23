@@ -29,7 +29,8 @@ class ExtendApproval(models.Model):
     is_measurement = fields.Boolean('Is Measurement')
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type', related='project_id.operation_type_id')
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
-
+    date = fields.Datetime(string="Date", default=fields.Datetime.now)
+    
     @api.onchange('project_id')
     def onchange_project_id(self):
         if self.project_id:
