@@ -30,7 +30,8 @@ class ExtendApproval(models.Model):
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type', related='project_id.operation_type_id')
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
     approver_rights = fields.Boolean(string='Approver rights')
-
+    date = fields.Datetime(string="Date", default=fields.Datetime.now)
+    
     @api.onchange('project_id')
     def get_values_def(self):
         for s in self:
