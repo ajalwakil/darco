@@ -82,15 +82,16 @@ class ExtendApproval(models.Model):
                         [('product_id', '=', line.product_id.id),
                          ('boq_id', '=', request.project_id.id)
                          ], limit=1)
-                    if material_planning:
-                        material_quantity = material_planning.issues_qty + line.quantity
-                        material_cost = material_planning.average_cost + line.product_id.standard_price
-                        if material_quantity > material_planning.planned_quantity:
-                            raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
-                                line.product_id.name)))
-                    else:
-                        raise UserError(
-                            _('The {0} not is in Material Planing.'.format(line.product_id.name)))
+                    if request.project_id.boq:
+                        if material_planning:
+                            material_quantity = material_planning.issues_qty + line.quantity
+                            material_cost = material_planning.average_cost + line.product_id.standard_price
+                            if material_quantity > material_planning.planned_quantity:
+                                raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
+                                    line.product_id.name)))
+                        else:
+                            raise UserError(
+                                _('The {0} not is in Material Planing.'.format(line.product_id.name)))
         return super().action_confirm()
 
     def action_approve(self, approver=None):
@@ -348,6 +349,7 @@ class ProjectExtend(models.Model):
 
     operation_type_id = fields.Many2one('stock.picking.type', 'Operation Type')
     operation_po_type_id = fields.Many2one('stock.picking.type', 'Operation Type Po')
+    bom = fields.Boolean('BOM')
 
 
 class StockPickingTypeExtend(models.Model):
