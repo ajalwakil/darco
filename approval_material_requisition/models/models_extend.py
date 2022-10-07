@@ -82,7 +82,7 @@ class ExtendApproval(models.Model):
                         [('product_id', '=', line.product_id.id),
                          ('boq_id', '=', request.project_id.id)
                          ], limit=1)
-                    if request.project_id.boq:
+                    if request.project_id.bom:
                         if material_planning:
                             material_quantity = material_planning.issues_qty + line.quantity
                             material_cost = material_planning.average_cost + line.product_id.standard_price
