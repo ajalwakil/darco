@@ -41,6 +41,11 @@ msgid "Create RFQ's"
 msgstr "إنشاء طلب عرض سعر"
 
 #. module: approval_material_requisition
+#: model:ir.model.fields,field_description:approval_material_requisition.field_project_project__bom
+msgid "BOM"
+msgstr "جدول الكميات"
+
+#. module: approval_material_requisition
 #: model_terms:ir.ui.view,arch_db:approval_material_requisition.view_approval_extend_status_form
 msgid "Internal Transfer"
 msgstr "تحويل داخلي"
