@@ -238,10 +238,21 @@ class ExtendApproval(models.Model):
         lines_list = []
         for line in self.product_line_ids:
             if line.on_hand_quantity > 0:
+                val = {
+                    'product_id': line.product_id.id,
+                    'quantity_done': line.quantity,
+                    'name': line.product_id.name,
+                    'product_uom': line.product_id.uom_id.id,
+                    'product_uom_qty': line.quantity,
+                    'procure_method': 'make_to_stock',
+                    'location_id': self.project_id.operation_type_id.default_location_src_id.id,
+                    'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
+                }
+                lines_list.append((0, 0, val))
                 material_planning = self.env['project.project.line'].search([('product_id', '=', line.product_id.id),
                                                                              ('boq_id', '=', self.project_id.id)
                                                                              ], limit=1)
-                if material_planning:
+                if material_planning and self.project_id.bom:
                     material_quantity = material_planning.issues_qty + line.quantity
                     material_cost = material_planning.average_cost + line.product_id.standard_price
                     if material_quantity > material_planning.planned_quantity:
@@ -250,18 +261,8 @@ class ExtendApproval(models.Model):
                     else:
                         material_planning.issues_qty = material_quantity
                         material_planning.average_cost = material_cost
-                    val = {
-                        'product_id': line.product_id.id,
-                        'quantity_done': line.quantity,
-                        'name': line.product_id.name,
-                        'product_uom': line.product_id.uom_id.id,
-                        'product_uom_qty': line.quantity,
-                        'procure_method': 'make_to_stock',
-                        'location_id': self.project_id.operation_type_id.default_location_src_id.id,
-                        'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
-                    }
-                    lines_list.append((0, 0, val))
-                else:
+
+                elif self.project_id.bom:
                     raise UserError(
                         _('The {0} not is in Material Planing.'.format(line.product_id.name)))
 
