@@ -31,7 +31,7 @@ class ExtendApproval(models.Model):
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
     approver_rights = fields.Boolean(string='Approver rights')
     date = fields.Datetime(string="Date", default=fields.Datetime.now)
-    
+
     @api.onchange('project_id')
     def get_values_def(self):
         for s in self:
@@ -87,8 +87,9 @@ class ExtendApproval(models.Model):
                             material_quantity = material_planning.issues_qty + line.quantity
                             material_cost = material_planning.average_cost + line.product_id.standard_price
                             if material_quantity > material_planning.planned_quantity:
-                                raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
-                                    line.product_id.name)))
+                                raise UserError(
+                                    _('The Approval quantity of the {0} increased the plan quantity.'.format(
+                                        line.product_id.name)))
                         else:
                             raise UserError(
                                 _('The {0} not is in Material Planing.'.format(line.product_id.name)))
@@ -234,7 +235,7 @@ class ExtendApproval(models.Model):
             else:
                 s.rfq = True
 
-        def create_transfer(self):
+    def create_transfer(self):
         lines_list = []
         for line in self.product_line_ids:
             if line.on_hand_quantity > 0:
