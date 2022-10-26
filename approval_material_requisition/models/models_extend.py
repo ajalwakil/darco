@@ -234,7 +234,7 @@ class ExtendApproval(models.Model):
             else:
                 s.rfq = True
 
-    def create_transfer(self):
+        def create_transfer(self):
         lines_list = []
         for line in self.product_line_ids:
             if line.on_hand_quantity > 0:
