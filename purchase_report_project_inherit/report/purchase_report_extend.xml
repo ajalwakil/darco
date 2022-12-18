@@ -165,12 +165,13 @@
                             <th name="th_description">
                                 <strong>Description</strong>
                             </th>
-                            <th name="th_expected_date" class="text-center">
-                                <strong>Expected Date</strong>
-                            </th>
                             <th name="th_quantity" class="text-right">
                                 <strong>Qty</strong>
                             </th>
+                            <th name="th_expected_date" class="text-center">
+                                <strong>Expected Date</strong>
+                            </th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -180,12 +181,12 @@
                                     <td id="product">
                                         <span t-field="order_line.name"/>
                                     </td>
-                                    <td class="text-center">
-                                        <span t-field="order_line.date_planned"/>
-                                    </td>
                                     <td class="text-right">
                                         <span t-field="order_line.product_qty"/>
                                         <span t-field="order_line.product_uom" groups="uom.group_uom"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="order_line.date_planned"/>
                                     </td>
                                 </t>
                                 <t t-else="">
