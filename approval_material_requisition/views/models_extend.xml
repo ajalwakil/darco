@@ -133,6 +133,9 @@
         <field name="model">approval.product.line</field>
         <field name="inherit_id" ref="approvals.approval_product_line_view_tree"/>
         <field name="arch" type="xml">
+            <field name="description" position="after">
+                <field name="note" widget="section_and_note_text" optional="show"/>
+            </field>
             <field name="quantity" position="after">
 
                 <field name="short_excess" optional="show"
@@ -171,7 +174,11 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
                 <field name="project_id"/>
+                <field name="approval_id" invisible="1"/>
             </field>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
+                <field name="note" widget="section_and_note_text" optional="show"/>
+            </xpath>
         </field>
     </record>
     <!--                    Stock Picking Extend-->

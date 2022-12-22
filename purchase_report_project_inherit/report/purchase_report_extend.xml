@@ -158,6 +158,13 @@
                                         <span t-field="line.name"/>
                                     </td>
                                 </t>
+                                <t t-if="line.note">
+                                    <tr>
+                                        <td colspan="99">
+                                            <span style="font-style: italic;" t-field="line.note"/>
+                                        </td>
+                                    </tr>
+                                </t>
                             </tr>
                             <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
                                 <tr class="is-subtotal text-right">
@@ -181,6 +188,40 @@
                             <t t-call="account.document_tax_totals"/>
                         </table>
                     </div>
+                </div>
+                <div style="margin-top:350px;margin-left:70px">
+                    <table style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-left" style="width:33%" name="th_approvals">
+                                    Approved By
+                                </th>
+                                <th class="text-left" style="width:33%" name="th_status">
+                                    Required By
+                                </th>
+                                <th class="text-left" style="width:33%" name="th_check">
+                                    Checked By
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.approval_id">
+                                <t t-foreach="o.approval_id.approver_ids" t-as="line">
+                                    <tr style="background-color:#fff">
+                                        <td class="text-left">
+                                            <span t-field="line.user_id.name"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="o.approval_id.request_owner_id.name"/>
+                                        </td>
+                                        <td class="text-left">
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
                 </div>
 
                 <p t-field="o.notes"/>

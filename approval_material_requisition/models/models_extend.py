@@ -198,6 +198,7 @@ class ExtendApproval(models.Model):
                     po_vals = line._get_purchase_order_values(vendor)
                     if self.project_id:
                         po_vals['project_id'] = self.project_id.id
+                        po_vals['approval_id'] = self.id
                         po_vals['picking_type_id'] = self.project_id.operation_po_type_id.id
                     new_purchase_order = self.env['purchase.order'].create(po_vals)
                     po_line_vals = self.env['purchase.order.line']._prepare_purchase_order_line(
@@ -208,6 +209,8 @@ class ExtendApproval(models.Model):
                         seller,
                         new_purchase_order,
                     )
+                    if line.note:
+                        po_line_vals['note'] = line.note
                     new_po_line = self.env['purchase.order.line'].create(po_line_vals)
                     line.purchase_order_line_id = new_po_line.id
                     new_purchase_order.order_line = [(4, new_po_line.id)]
@@ -297,12 +300,21 @@ class ExtendApproval(models.Model):
         return action
 
 
+class PurchaseOrderLineInherit(models.Model):
+    _inherit = 'purchase.order.line'
+
+    note = fields.Char()
+
+
+
+
 class ExtendApprovalProductLine(models.Model):
     _inherit = "approval.product.line"
 
     on_hand_quantity = fields.Float('On Hand')
     short_excess = fields.Float('Short/Excess Qty', compute='compute_qty')
     source_location_id = fields.Many2one('stock.location', 'Location')
+    note = fields.Char()
 
     @api.onchange('product_id', 'location_id')
     def onchange_product_id(self):
@@ -330,6 +342,7 @@ class ExtendPurchase(models.Model):
     _inherit = "purchase.order"
 
     project_id = fields.Many2one('project.project', 'Project Number')
+    approval_id = fields.Many2one('approval.request', 'approval id')
 
     @api.onchange('project_id')
     def onchange_project_id(self):
