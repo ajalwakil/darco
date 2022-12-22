@@ -194,13 +194,28 @@
                         <thead>
                             <tr>
                                 <th class="text-left" style="width:33%" name="th_approvals">
-                                    Approved By
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                        تمت الموافقة عليه من قبل
+                                    </t>
+                                    <t t-else="">
+                                        Approved By
+                                    </t>
                                 </th>
                                 <th class="text-left" style="width:33%" name="th_status">
-                                    Required By
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                       مطلوب من قبل
+                                    </t>
+                                    <t t-else="">
+                                        Required By
+                                    </t>
                                 </th>
                                 <th class="text-left" style="width:33%" name="th_check">
-                                    Checked By
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                        فحص بواسطة
+                                    </t>
+                                    <t t-else="">
+                                        Checked By
+                                    </t>
                                 </th>
 
                             </tr>
