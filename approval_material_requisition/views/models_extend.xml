@@ -191,12 +191,12 @@
             <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
                 <field name="note" widget="section_and_note_text" optional="show"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
-                <label for="note"/>
-                <div class="o_row">
-                    <field name="note" widget="section_and_note_text" optional="show"/>
-                </div>
-            </xpath>
+<!--            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">-->
+<!--                <label for="note"/>-->
+<!--                <div class="o_row">-->
+<!--                    <field name="note" widget="section_and_note_text" optional="show"/>-->
+<!--                </div>-->
+<!--            </xpath>-->
         </field>
     </record>
     <!--                    Stock Picking Extend-->
