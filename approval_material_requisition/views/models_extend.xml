@@ -149,6 +149,17 @@
             </field>
         </field>
     </record>
+    <record id="view_approval_line_extend_status_form_inherit" model="ir.ui.view">
+        <field name="name">approval.product.line.form.inherit</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_form"/>
+        <field name="arch" type="xml">
+            <field name="description" position="after">
+                <field name="note" widget="section_and_note_text" optional="show"/>
+            </field>
+        </field>
+    </record>
+
 
 
     <!--                    Project Extend-->
