@@ -312,6 +312,13 @@
                                         <span t-field="order_line.name"/>
                                     </td>
                                 </t>
+                                <t t-if="order_line.note">
+                                    <tr>
+                                        <td colspan="99">
+                                            <span style="font-style: italic;" t-field="order_line.note"/>
+                                        </td>
+                                    </tr>
+                                </t>
                             </tr>
                         </t>
                     </tbody>
@@ -443,6 +450,13 @@
                                     <td colspan="99" id="note">
                                         <span t-field="line.name"/>
                                     </td>
+                                </t>
+                                <t t-if="line.note">
+                                    <tr>
+                                        <td colspan="99">
+                                            <span style="font-style: italic;" t-field="line.note"/>
+                                        </td>
+                                    </tr>
                                 </t>
                             </tr>
                             <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
