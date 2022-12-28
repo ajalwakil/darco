@@ -164,7 +164,7 @@
         <field name="model">purchase.order.line</field>
         <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='invoice_lines']" position="after">
+            <xpath expr="//group/group/field[@name='price_unit']" position="after">
                 <separator string="Note"/>
                 <field name="note" widget="section_and_note_text"/>
             </xpath>
