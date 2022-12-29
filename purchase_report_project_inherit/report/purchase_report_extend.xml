@@ -323,6 +323,55 @@
                         </t>
                     </tbody>
                 </table>
+                             <div style="margin-top:350px;margin-left:70px">
+                    <table style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-left" style="width:33%" name="th_approvals">
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                        تمت الموافقة عليه من قبل
+                                    </t>
+                                    <t t-else="">
+                                        Approved By
+                                    </t>
+                                </th>
+                                <th class="text-left" style="width:33%" name="th_status">
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                       مطلوب من قبل
+                                    </t>
+                                    <t t-else="">
+                                        Required By
+                                    </t>
+                                </th>
+                                <th class="text-left" style="width:33%" name="th_check">
+                                    <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                        فحص بواسطة
+                                    </t>
+                                    <t t-else="">
+                                        Checked By
+                                    </t>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.approval_id">
+                                <t t-foreach="o.approval_id.approver_ids" t-as="line">
+                                    <tr style="background-color:#fff">
+                                        <td class="text-left">
+                                            <span t-field="line.user_id.name"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="o.approval_id.request_owner_id.name"/>
+                                        </td>
+                                        <td class="text-left">
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
 
                 <p t-field="o.notes"/>
 
