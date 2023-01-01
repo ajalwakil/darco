@@ -60,6 +60,15 @@
                         </t>
                         <p t-field="o.date_order" class="m-0"/>
                     </div>
+                    <div t-if="o.project_id" class="col-3 bm-2">
+                        <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                            <strong>مشروع</strong>
+                        </t>
+                        <t t-else="">
+                            <strong>Project</strong>
+                        </t>
+                        <p t-field="o.project_id" class="m-0"/>
+                    </div>
                 </div>
 
                 <table class="table table-sm o_main_table">
@@ -260,6 +269,17 @@
                     #
                     <span t-field="o.name"/>
                 </h2>
+                <div id="informations" class="row mt32 mb32">
+                    <div t-if="o.project_id" class="col-3 bm-2">
+                        <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                            <strong>مشروع</strong>
+                        </t>
+                        <t t-else="">
+                            <strong>Project</strong>
+                        </t>
+                        <p t-field="o.project_id" class="m-0"/>
+                    </div>
+                </div>
 
                 <table class="table table-sm">
                     <thead>
