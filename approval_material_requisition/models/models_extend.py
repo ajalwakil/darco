@@ -31,7 +31,7 @@ class ExtendApproval(models.Model):
     region_manager = fields.Many2one('res.users', 'Region Manager', related='project_id.region_manager')
     approver_rights = fields.Boolean(string='Approver rights')
     date = fields.Datetime(string="Date", default=fields.Datetime.now)
-    
+
     @api.onchange('project_id')
     def get_values_def(self):
         for s in self:
@@ -87,8 +87,9 @@ class ExtendApproval(models.Model):
                             material_quantity = material_planning.issues_qty + line.quantity
                             material_cost = material_planning.average_cost + line.product_id.standard_price
                             if material_quantity > material_planning.planned_quantity:
-                                raise UserError(_('The Approval quantity of the {0} increased the plan quantity.'.format(
-                                    line.product_id.name)))
+                                raise UserError(
+                                    _('The Approval quantity of the {0} increased the plan quantity.'.format(
+                                        line.product_id.name)))
                         else:
                             raise UserError(
                                 _('The {0} not is in Material Planing.'.format(line.product_id.name)))
@@ -197,6 +198,7 @@ class ExtendApproval(models.Model):
                     po_vals = line._get_purchase_order_values(vendor)
                     if self.project_id:
                         po_vals['project_id'] = self.project_id.id
+                        po_vals['approval_id'] = self.id
                         po_vals['picking_type_id'] = self.project_id.operation_po_type_id.id
                     new_purchase_order = self.env['purchase.order'].create(po_vals)
                     po_line_vals = self.env['purchase.order.line']._prepare_purchase_order_line(
@@ -207,6 +209,8 @@ class ExtendApproval(models.Model):
                         seller,
                         new_purchase_order,
                     )
+                    if line.note:
+                        po_line_vals['note'] = line.note
                     new_po_line = self.env['purchase.order.line'].create(po_line_vals)
                     line.purchase_order_line_id = new_po_line.id
                     new_purchase_order.order_line = [(4, new_po_line.id)]
@@ -238,10 +242,21 @@ class ExtendApproval(models.Model):
         lines_list = []
         for line in self.product_line_ids:
             if line.on_hand_quantity > 0:
+                val = {
+                    'product_id': line.product_id.id,
+                    'quantity_done': line.quantity,
+                    'name': line.product_id.name,
+                    'product_uom': line.product_id.uom_id.id,
+                    'product_uom_qty': line.quantity,
+                    'procure_method': 'make_to_stock',
+                    'location_id': self.project_id.operation_type_id.default_location_src_id.id,
+                    'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
+                }
+                lines_list.append((0, 0, val))
                 material_planning = self.env['project.project.line'].search([('product_id', '=', line.product_id.id),
                                                                              ('boq_id', '=', self.project_id.id)
                                                                              ], limit=1)
-                if material_planning:
+                if material_planning and self.project_id.bom:
                     material_quantity = material_planning.issues_qty + line.quantity
                     material_cost = material_planning.average_cost + line.product_id.standard_price
                     if material_quantity > material_planning.planned_quantity:
@@ -250,18 +265,8 @@ class ExtendApproval(models.Model):
                     else:
                         material_planning.issues_qty = material_quantity
                         material_planning.average_cost = material_cost
-                    val = {
-                        'product_id': line.product_id.id,
-                        'quantity_done': line.quantity,
-                        'name': line.product_id.name,
-                        'product_uom': line.product_id.uom_id.id,
-                        'product_uom_qty': line.quantity,
-                        'procure_method': 'make_to_stock',
-                        'location_id': self.project_id.operation_type_id.default_location_src_id.id,
-                        'location_dest_id': self.project_id.operation_type_id.default_location_dest_id.id
-                    }
-                    lines_list.append((0, 0, val))
-                else:
+
+                elif self.project_id.bom:
                     raise UserError(
                         _('The {0} not is in Material Planing.'.format(line.product_id.name)))
 
@@ -295,12 +300,21 @@ class ExtendApproval(models.Model):
         return action
 
 
+class PurchaseOrderLineInherit(models.Model):
+    _inherit = 'purchase.order.line'
+
+    note = fields.Char()
+
+
+
+
 class ExtendApprovalProductLine(models.Model):
     _inherit = "approval.product.line"
 
     on_hand_quantity = fields.Float('On Hand')
     short_excess = fields.Float('Short/Excess Qty', compute='compute_qty')
     source_location_id = fields.Many2one('stock.location', 'Location')
+    note = fields.Char()
 
     @api.onchange('product_id', 'location_id')
     def onchange_product_id(self):
@@ -328,6 +342,7 @@ class ExtendPurchase(models.Model):
     _inherit = "purchase.order"
 
     project_id = fields.Many2one('project.project', 'Project Number')
+    approval_id = fields.Many2one('approval.request', 'approval id')
 
     @api.onchange('project_id')
     def onchange_project_id(self):
