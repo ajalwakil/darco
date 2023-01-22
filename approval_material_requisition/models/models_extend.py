@@ -311,10 +311,11 @@ class PurchaseOrderLineInherit(models.Model):
 class ExtendApprovalProductLine(models.Model):
     _inherit = "approval.product.line"
 
-    on_hand_quantity = fields.Float('On Hand')
-    short_excess = fields.Float('Short/Excess Qty', compute='compute_qty')
+    on_hand_quantity = fields.Float('On Hand', digits=(16, 0))
+    short_excess = fields.Float('Short/Excess Qty', compute='compute_qty', digits=(16, 0))
     source_location_id = fields.Many2one('stock.location', 'Location')
     note = fields.Char()
+    quantity = fields.Float("Quantity", digits=(16, 0))
 
     @api.onchange('product_id', 'location_id')
     def onchange_product_id(self):
