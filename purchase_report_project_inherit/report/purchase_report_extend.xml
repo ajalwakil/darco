@@ -76,10 +76,10 @@
                         <tr>
                             <th name="th_description">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                    <strong>وصف</strong>
+                                    <strong>منتج</strong>
                                 </t>
                                 <t t-else="">
-                                    <strong>Description</strong>
+                                    <strong>Product</strong>
                                 </t>
                             </th>
                             <th name="th_quantity" class="text-right">
@@ -135,7 +135,7 @@
                             <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
                                 <t t-if="not line.display_type">
                                     <td id="product">
-                                        <span t-field="line.name"/>
+                                        <span t-field="line.product_id.default_code"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="line.product_qty"/>
@@ -286,10 +286,10 @@
                         <tr>
                             <th name="th_description">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                  <strong>وصف</strong>
+                                  <strong>منتج</strong>
                                 </t>
                                 <t t-else="">
-                                    <strong>Description</strong>
+                                    <strong>Product</strong>
                                 </t>
                             </th>
                             <th name="th_quantity" class="text-right">
@@ -317,7 +317,7 @@
                             <tr t-att-class="'bg-200 font-weight-bold o_line_section' if order_line.display_type == 'line_section' else 'font-italic o_line_note' if order_line.display_type == 'line_note' else ''">
                                 <t t-if="not order_line.display_type">
                                     <td id="product">
-                                        <span t-field="order_line.name"/>
+                                        <span t-field="order_line.product_id.default_code"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="order_line.product_qty"/>
