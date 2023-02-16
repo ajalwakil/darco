@@ -11,7 +11,8 @@
                     <t t-else="">
                         Request for Quotation
                     </t>
-                    #<span t-field="o.name"/>
+                    #
+                    <span t-field="o.name"/>
                 </h2>
                 <h2 t-if="o.state in ['purchase', 'done']">
                     <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
@@ -20,7 +21,8 @@
                     <t t-else="">
                         Purchase Order
                     </t>
-                    #<span t-field="o.name"/>
+                    #
+                    <span t-field="o.name"/>
                 </h2>
                 <h2 t-if="o.state == 'cancel'">
                     <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
@@ -29,13 +31,14 @@
                     <t t-else="">
                         Cancelled Purchase Order
                     </t>
-                    #<span t-field="o.name"/>
+                    #
+                    <span t-field="o.name"/>
                 </h2>
 
                 <div id="informations" class="row mt32 mb32">
                     <div t-if="o.user_id" class="col-3 bm-2">
                         <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                            <strong>   مندوب شراء</strong>
+                            <strong>مندوب شراء</strong>
                         </t>
                         <t t-else="">
                             <strong>Purchase Representative:</strong>
@@ -44,7 +47,7 @@
                     </div>
                     <div t-if="o.partner_ref" class="col-3 bm-2">
                         <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                            <strong>  مرجع طلبك</strong>
+                            <strong>مرجع طلبك</strong>
                         </t>
                         <t t-else="">
                             <strong>Your Order Reference:</strong>
@@ -53,7 +56,7 @@
                     </div>
                     <div t-if="o.date_order" class="col-3 bm-2">
                         <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                            <strong> تاريخ الطلب</strong>
+                            <strong>تاريخ الطلب</strong>
                         </t>
                         <t t-else="">
                             <strong>Order Date:</strong>
@@ -74,12 +77,20 @@
                 <table class="table table-sm o_main_table">
                     <thead>
                         <tr>
-                            <th name="th_description">
+                            <th name="th_product">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
                                     <strong>منتج</strong>
                                 </t>
                                 <t t-else="">
                                     <strong>Product</strong>
+                                </t>
+                            </th>
+                            <th name="th_description">
+                                <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                    <strong>وصف</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong>Description</strong>
                                 </t>
                             </th>
                             <th name="th_quantity" class="text-right">
@@ -111,7 +122,7 @@
                                     <strong>سعر الوحدة</strong>
                                 </t>
                                 <t t-else="">
-                                     <strong>Unit Price</strong>
+                                    <strong>Unit Price</strong>
                                 </t>
                             </th>
                             <th name="th_amount" class="text-right">
@@ -136,6 +147,9 @@
                                 <t t-if="not line.display_type">
                                     <td id="product">
                                         <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td id="description">
+                                        <span t-field="line.name"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="line.product_qty"/>
@@ -212,7 +226,7 @@
                                 </th>
                                 <th class="text-left" style="width:33%" name="th_status">
                                     <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                       مطلوب من قبل
+                                        مطلوب من قبل
                                     </t>
                                     <t t-else="">
                                         Required By
@@ -284,17 +298,25 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th name="th_description">
+                            <th name="th_product">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                  <strong>منتج</strong>
+                                    <strong>منتج</strong>
                                 </t>
                                 <t t-else="">
                                     <strong>Product</strong>
                                 </t>
                             </th>
+                            <th name="th_description">
+                                <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
+                                    <strong>وصف</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong>Description</strong>
+                                </t>
+                            </th>
                             <th name="th_quantity" class="text-right">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                  <strong>كمية</strong>
+                                    <strong>كمية</strong>
                                 </t>
                                 <t t-else="">
                                     <strong>Qty</strong>
@@ -302,7 +324,7 @@
                             </th>
                             <th name="th_expected_date" class="text-center">
                                 <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                  <strong>التاريخ المتوقع</strong>
+                                    <strong>التاريخ المتوقع</strong>
                                 </t>
                                 <t t-else="">
                                     <strong>Expected Date</strong>
@@ -318,6 +340,9 @@
                                 <t t-if="not order_line.display_type">
                                     <td id="product">
                                         <span t-field="order_line.product_id.default_code"/>
+                                    </td>
+                                    <td id="description">
+                                        <span t-field="order_line.name"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="order_line.product_qty"/>
@@ -343,7 +368,7 @@
                         </t>
                     </tbody>
                 </table>
-                             <div style="margin-top:350px;margin-left:70px">
+                <div style="margin-top:350px;margin-left:70px">
                     <table style="width:100%;">
                         <thead>
                             <tr>
@@ -357,7 +382,7 @@
                                 </th>
                                 <th class="text-left" style="width:33%" name="th_status">
                                     <t t-if="o.env.user.lang in ['ar_SY','ar_001']">
-                                       مطلوب من قبل
+                                        مطلوب من قبل
                                     </t>
                                     <t t-else="">
                                         Required By
@@ -460,6 +485,9 @@
                             <th name="th_product">
                                 <strong>Product</strong>
                             </th>
+                            <th name="th_description">
+                                <strong>Description</strong>
+                            </th>
                             <th name="th_taxes">
                                 <strong>Taxes</strong>
                             </th>
@@ -489,6 +517,9 @@
                                 <t t-if="not line.display_type">
                                     <td id="product">
                                         <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td id="description">
+                                        <span t-field="line.name"/>
                                     </td>
                                     <td name="td_taxes">
                                         <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
