@@ -181,7 +181,11 @@ class ExtendApproval(models.Model):
                             seller,
                             purchase_order,
                         )
+                        if line.note:
+                            po_line_vals['note'] = line.note
                         new_po_line = self.env['purchase.order.line'].create(po_line_vals)
+                        new_po_line.note = line.note
+                        new_po_line.write({'note': line.note})
                         line.purchase_order_line_id = new_po_line.id
                         purchase_order.order_line = [(4, new_po_line.id)]
 
@@ -212,6 +216,8 @@ class ExtendApproval(models.Model):
                     if line.note:
                         po_line_vals['note'] = line.note
                     new_po_line = self.env['purchase.order.line'].create(po_line_vals)
+                    new_po_line.note = line.note
+                    new_po_line.write({'note': line.note})
                     line.purchase_order_line_id = new_po_line.id
                     new_purchase_order.order_line = [(4, new_po_line.id)]
 
